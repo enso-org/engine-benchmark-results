@@ -1,2 +1,2 @@
 # Engine benchmark results
-Download and see [index.html](index.html).
+[https://enso-org.github.io/engine-benchmark-results/](https://enso-org.github.io/engine-benchmark-results/)
