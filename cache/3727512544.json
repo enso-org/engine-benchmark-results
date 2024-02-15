@@ -1,0 +1,57 @@
+{
+  "bench_run": {
+    "id": "3727512544",
+    "html_url": "https://github.com/enso-org/enso/actions/runs/3727512544",
+    "run_attempt": 1,
+    "event": "push",
+    "display_title": "Auto Layouts (#3937)",
+    "head_commit": {
+      "id": "06cfafca096cce668205e93960fe25bbf1c317ff",
+      "message": "Auto Layouts (#3937)",
+      "timestamp": "2022-12-19T01:16:54Z",
+      "author": {
+        "name": "Wojciech Dani\u0142o"
+      },
+      "url": "https://github.com/enso-org/enso/commit/06cfafca096cce668205e93960fe25bbf1c317ff"
+    }
+  },
+  "label_score_dict": {
+    "org.enso.interpreter.bench.benchmarks.RuntimeCacheBenchmarks.benchCacheGet": 0.007339679877319802,
+    "org.enso.interpreter.bench.benchmarks.semantic.AtomBenchmarks.benchGenerateList": 8.49921054916822,
+    "org.enso.interpreter.bench.benchmarks.semantic.AtomBenchmarks.benchGenerateListQualified": 10.681049108215282,
+    "org.enso.interpreter.bench.benchmarks.semantic.AtomBenchmarks.benchMapReverseCurryList": 2.918346798208345e-05,
+    "org.enso.interpreter.bench.benchmarks.semantic.AtomBenchmarks.benchMapReverseList": 2.992872868191437e-05,
+    "org.enso.interpreter.bench.benchmarks.semantic.AtomBenchmarks.benchReverseList": 2.9234364636950613e-05,
+    "org.enso.interpreter.bench.benchmarks.semantic.AtomBenchmarks.benchReverseListMethods": 2.9233853215482396e-05,
+    "org.enso.interpreter.bench.benchmarks.semantic.AtomBenchmarks.benchSumList": 2.920518295558119e-05,
+    "org.enso.interpreter.bench.benchmarks.semantic.AtomBenchmarks.benchSumListFallback": 2.924305782795713e-05,
+    "org.enso.interpreter.bench.benchmarks.semantic.AtomBenchmarks.benchSumListMethods": 2.9340381140418356e-05,
+    "org.enso.interpreter.bench.benchmarks.semantic.AtomBenchmarks.sumListLeftFold": 2.9219733503895395e-05,
+    "org.enso.interpreter.bench.benchmarks.semantic.CallableBenchmarks.benchSumTCOfromCall": 96.26915402200648,
+    "org.enso.interpreter.bench.benchmarks.semantic.CallableBenchmarks.benchSumTCOmethodCall": 96.23078975489598,
+    "org.enso.interpreter.bench.benchmarks.semantic.CallableBenchmarks.benchSumTCOmethodCallWithDefaultedArguments": 96.24365862065649,
+    "org.enso.interpreter.bench.benchmarks.semantic.CallableBenchmarks.benchSumTCOmethodCallWithNamedArguments": 96.27219735110495,
+    "org.enso.interpreter.bench.benchmarks.semantic.CurriedFunctionBenchmarks.averageCurried": 0.13175819725975868,
+    "org.enso.interpreter.bench.benchmarks.semantic.CurriedFunctionBenchmarks.averageLambda": 0.14743140888291423,
+    "org.enso.interpreter.bench.benchmarks.semantic.NamedDefaultedArgumentBenchmarks.benchSumTCOWithDefaultArgs": 96.21145369915857,
+    "org.enso.interpreter.bench.benchmarks.semantic.NamedDefaultedArgumentBenchmarks.benchSumTCOWithNamedArgs": 96.22576054851595,
+    "org.enso.interpreter.bench.benchmarks.semantic.RecursionBenchmarks.benchNestedThunkSum": 89.63995924741859,
+    "org.enso.interpreter.bench.benchmarks.semantic.RecursionBenchmarks.benchOversaturatedRecursiveCall": 96.2079041163939,
+    "org.enso.interpreter.bench.benchmarks.semantic.RecursionBenchmarks.benchSumRecursive": 0.0010412772917295005,
+    "org.enso.interpreter.bench.benchmarks.semantic.RecursionBenchmarks.benchSumStateTCO": 89.55947106253441,
+    "org.enso.interpreter.bench.benchmarks.semantic.RecursionBenchmarks.benchSumTCO": 96.19269792504855,
+    "org.enso.interpreter.bench.benchmarks.semantic.RecursionBenchmarks.benchSumTCOFoldLike": 96.27161428822932,
+    "org.enso.interpreter.bench.benchmarks.semantic.RecursionBenchmarks.benchSumTCOWithEval": 96.1409631532686,
+    "org.enso.interpreter.bench.benchmarks.semantic.StringBenchmarks.lengthOfStrings": 0.03957405828355374,
+    "org.enso.interpreter.bench.benchmarks.semantic.TypePatternBenchmarks.matchOverAny": 0.004608396410194712,
+    "org.enso.interpreter.bench.benchmarks.semantic.TypePatternBenchmarks.matchOverDecimal": 0.004390254290661404,
+    "org.enso.interpreter.bench.benchmarks.semantic.VectorBenchmarks.averageAbstractList": 0.10633611629384583,
+    "org.enso.interpreter.bench.benchmarks.semantic.VectorBenchmarks.averageOverArray": 0.015387071740867442,
+    "org.enso.interpreter.bench.benchmarks.semantic.VectorBenchmarks.averageOverArrayProxy": 0.01583130936909727,
+    "org.enso.interpreter.bench.benchmarks.semantic.VectorBenchmarks.averageOverArrayProxyNew": 0.018650900031567448,
+    "org.enso.interpreter.bench.benchmarks.semantic.VectorBenchmarks.averageOverPolyglotArray": 0.015383432788816603,
+    "org.enso.interpreter.bench.benchmarks.semantic.VectorBenchmarks.averageOverPolyglotVector": 0.013268093819515877,
+    "org.enso.interpreter.bench.benchmarks.semantic.VectorBenchmarks.averageOverSlice": 0.015247982673652006,
+    "org.enso.interpreter.bench.benchmarks.semantic.VectorBenchmarks.averageOverVector": 0.013537817557324857
+  }
+}

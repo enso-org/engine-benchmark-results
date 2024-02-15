@@ -1,0 +1,57 @@
+{
+  "bench_run": {
+    "id": "3726238618",
+    "html_url": "https://github.com/enso-org/enso/actions/runs/3726238618",
+    "run_attempt": 1,
+    "event": "push",
+    "display_title": "Update Component Browser only when user stops typing. (#3991)",
+    "head_commit": {
+      "id": "a6b5db9021525a935fc1d71e4278595ccc0f6f4e",
+      "message": "Update Component Browser only when user stops typing. (#3991)\n\nCurrently on every keystroke we try to refresh the Component Browser content. Due to some performance problems one refresh can take > 500 ms, so several keystrokes can hang our app for few seconts.\n\nThis PR mitigates this problem by refreshing the CB only when 200 ms passes since last keystroke. It should not be problematic for the user (actually many search engines, like this in IntelliJ do this), but we avoid choking our app with multiple CB refreshes at once.",
+      "timestamp": "2022-12-18T19:17:49Z",
+      "author": {
+        "name": "Adam Obuchowicz"
+      },
+      "url": "https://github.com/enso-org/enso/commit/a6b5db9021525a935fc1d71e4278595ccc0f6f4e"
+    }
+  },
+  "label_score_dict": {
+    "org.enso.interpreter.bench.benchmarks.RuntimeCacheBenchmarks.benchCacheGet": 0.006843903527483199,
+    "org.enso.interpreter.bench.benchmarks.semantic.AtomBenchmarks.benchGenerateList": 8.461885536536622,
+    "org.enso.interpreter.bench.benchmarks.semantic.AtomBenchmarks.benchGenerateListQualified": 12.564981723064708,
+    "org.enso.interpreter.bench.benchmarks.semantic.AtomBenchmarks.benchMapReverseCurryList": 2.9190138464357713e-05,
+    "org.enso.interpreter.bench.benchmarks.semantic.AtomBenchmarks.benchMapReverseList": 2.928087365292469e-05,
+    "org.enso.interpreter.bench.benchmarks.semantic.AtomBenchmarks.benchReverseList": 2.921580336415426e-05,
+    "org.enso.interpreter.bench.benchmarks.semantic.AtomBenchmarks.benchReverseListMethods": 2.921507900092494e-05,
+    "org.enso.interpreter.bench.benchmarks.semantic.AtomBenchmarks.benchSumList": 2.92736249882895e-05,
+    "org.enso.interpreter.bench.benchmarks.semantic.AtomBenchmarks.benchSumListFallback": 2.922492781116626e-05,
+    "org.enso.interpreter.bench.benchmarks.semantic.AtomBenchmarks.benchSumListMethods": 2.9225796933300257e-05,
+    "org.enso.interpreter.bench.benchmarks.semantic.AtomBenchmarks.sumListLeftFold": 2.9321287292446258e-05,
+    "org.enso.interpreter.bench.benchmarks.semantic.CallableBenchmarks.benchSumTCOfromCall": 96.30843990792418,
+    "org.enso.interpreter.bench.benchmarks.semantic.CallableBenchmarks.benchSumTCOmethodCall": 96.26369405333334,
+    "org.enso.interpreter.bench.benchmarks.semantic.CallableBenchmarks.benchSumTCOmethodCallWithDefaultedArguments": 96.24589690204346,
+    "org.enso.interpreter.bench.benchmarks.semantic.CallableBenchmarks.benchSumTCOmethodCallWithNamedArguments": 96.23536413000461,
+    "org.enso.interpreter.bench.benchmarks.semantic.CurriedFunctionBenchmarks.averageCurried": 0.12910021503798533,
+    "org.enso.interpreter.bench.benchmarks.semantic.CurriedFunctionBenchmarks.averageLambda": 0.15014161084972893,
+    "org.enso.interpreter.bench.benchmarks.semantic.NamedDefaultedArgumentBenchmarks.benchSumTCOWithDefaultArgs": 96.23160111186316,
+    "org.enso.interpreter.bench.benchmarks.semantic.NamedDefaultedArgumentBenchmarks.benchSumTCOWithNamedArgs": 96.27545003981507,
+    "org.enso.interpreter.bench.benchmarks.semantic.RecursionBenchmarks.benchNestedThunkSum": 89.3858243989441,
+    "org.enso.interpreter.bench.benchmarks.semantic.RecursionBenchmarks.benchOversaturatedRecursiveCall": 96.27143834894129,
+    "org.enso.interpreter.bench.benchmarks.semantic.RecursionBenchmarks.benchSumRecursive": 0.0010352085608744373,
+    "org.enso.interpreter.bench.benchmarks.semantic.RecursionBenchmarks.benchSumStateTCO": 89.32061085173912,
+    "org.enso.interpreter.bench.benchmarks.semantic.RecursionBenchmarks.benchSumTCO": 96.2012573644013,
+    "org.enso.interpreter.bench.benchmarks.semantic.RecursionBenchmarks.benchSumTCOFoldLike": 96.27405585098475,
+    "org.enso.interpreter.bench.benchmarks.semantic.RecursionBenchmarks.benchSumTCOWithEval": 96.28187715643087,
+    "org.enso.interpreter.bench.benchmarks.semantic.StringBenchmarks.lengthOfStrings": 0.040429405332447196,
+    "org.enso.interpreter.bench.benchmarks.semantic.TypePatternBenchmarks.matchOverAny": 0.004715862801570025,
+    "org.enso.interpreter.bench.benchmarks.semantic.TypePatternBenchmarks.matchOverDecimal": 0.004141609721213682,
+    "org.enso.interpreter.bench.benchmarks.semantic.VectorBenchmarks.averageAbstractList": 0.10934090059531272,
+    "org.enso.interpreter.bench.benchmarks.semantic.VectorBenchmarks.averageOverArray": 0.015421971552571311,
+    "org.enso.interpreter.bench.benchmarks.semantic.VectorBenchmarks.averageOverArrayProxy": 0.015823744252475295,
+    "org.enso.interpreter.bench.benchmarks.semantic.VectorBenchmarks.averageOverArrayProxyNew": 0.01862308855042398,
+    "org.enso.interpreter.bench.benchmarks.semantic.VectorBenchmarks.averageOverPolyglotArray": 0.015423902775503878,
+    "org.enso.interpreter.bench.benchmarks.semantic.VectorBenchmarks.averageOverPolyglotVector": 0.013520585557045101,
+    "org.enso.interpreter.bench.benchmarks.semantic.VectorBenchmarks.averageOverSlice": 0.015268126933842685,
+    "org.enso.interpreter.bench.benchmarks.semantic.VectorBenchmarks.averageOverVector": 0.013311727227576698
+  }
+}

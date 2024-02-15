@@ -1,0 +1,62 @@
+{
+  "bench_run": {
+    "id": "3798433848",
+    "html_url": "https://github.com/enso-org/enso/actions/runs/3798433848",
+    "run_attempt": 1,
+    "event": "schedule",
+    "display_title": "Benchmark Engine",
+    "head_commit": {
+      "id": "37af06b14d86d4b888fb30778067e0a025b91c9c",
+      "message": "Integrate Tailwind framework (#3999)\n\n[Task link](https://www.pivotaltracker.com/story/show/183992025)\n\nThis PR moves the documentation visualization into a separate crate and sets up the Tailwind CSS framework for this new crate.\n\nWe would use Tailwind to style our HTML documentation.\n\n\nhttps://user-images.githubusercontent.com/6566674/208719213-85f78f7e-8dc2-45d5-95a1-db4baad1bda1.mp4",
+      "timestamp": "2022-12-23T14:20:24Z",
+      "author": {
+        "name": "Ilya Bogdanov"
+      },
+      "url": "https://github.com/enso-org/enso/commit/37af06b14d86d4b888fb30778067e0a025b91c9c"
+    }
+  },
+  "label_score_dict": {
+    "org.enso.interpreter.bench.benchmarks.RuntimeCacheBenchmarks.benchCacheGet": 0.00562345830946387,
+    "org.enso.interpreter.bench.benchmarks.semantic.ArrayProxyBenchmarks.sumOverComputingProxy": 0.14403652935848796,
+    "org.enso.interpreter.bench.benchmarks.semantic.ArrayProxyBenchmarks.sumOverDelegatingProxy": 2.2910642869304576,
+    "org.enso.interpreter.bench.benchmarks.semantic.ArrayProxyBenchmarks.sumOverVector": 1.8884572739798149,
+    "org.enso.interpreter.bench.benchmarks.semantic.ArrayProxyBenchmarks.sumOverVectorBackedByComputingProxy": 0.1439167808326227,
+    "org.enso.interpreter.bench.benchmarks.semantic.ArrayProxyBenchmarks.sumOverVectorBackedByDelegatingProxy": 4.515844942081909,
+    "org.enso.interpreter.bench.benchmarks.semantic.AtomBenchmarks.benchGenerateList": 8.036924799082383,
+    "org.enso.interpreter.bench.benchmarks.semantic.AtomBenchmarks.benchGenerateListQualified": 8.073828315142151,
+    "org.enso.interpreter.bench.benchmarks.semantic.AtomBenchmarks.benchMapReverseCurryList": 2.923127420911378e-05,
+    "org.enso.interpreter.bench.benchmarks.semantic.AtomBenchmarks.benchMapReverseList": 2.925256853639895e-05,
+    "org.enso.interpreter.bench.benchmarks.semantic.AtomBenchmarks.benchReverseList": 2.924010003592586e-05,
+    "org.enso.interpreter.bench.benchmarks.semantic.AtomBenchmarks.benchReverseListMethods": 2.9262449784850206e-05,
+    "org.enso.interpreter.bench.benchmarks.semantic.AtomBenchmarks.benchSumList": 2.9234547855776358e-05,
+    "org.enso.interpreter.bench.benchmarks.semantic.AtomBenchmarks.benchSumListFallback": 2.9401308192565806e-05,
+    "org.enso.interpreter.bench.benchmarks.semantic.AtomBenchmarks.benchSumListMethods": 2.9211253931719997e-05,
+    "org.enso.interpreter.bench.benchmarks.semantic.AtomBenchmarks.sumListLeftFold": 2.9226648649046992e-05,
+    "org.enso.interpreter.bench.benchmarks.semantic.CallableBenchmarks.benchSumTCOfromCall": 96.22422436828478,
+    "org.enso.interpreter.bench.benchmarks.semantic.CallableBenchmarks.benchSumTCOmethodCall": 96.20665151472954,
+    "org.enso.interpreter.bench.benchmarks.semantic.CallableBenchmarks.benchSumTCOmethodCallWithDefaultedArguments": 96.25098239868701,
+    "org.enso.interpreter.bench.benchmarks.semantic.CallableBenchmarks.benchSumTCOmethodCallWithNamedArguments": 96.23175973087379,
+    "org.enso.interpreter.bench.benchmarks.semantic.CurriedFunctionBenchmarks.averageCurried": 0.12960583766387412,
+    "org.enso.interpreter.bench.benchmarks.semantic.CurriedFunctionBenchmarks.averageLambda": 0.14761253711384617,
+    "org.enso.interpreter.bench.benchmarks.semantic.NamedDefaultedArgumentBenchmarks.benchSumTCOWithDefaultArgs": 96.24034167310217,
+    "org.enso.interpreter.bench.benchmarks.semantic.NamedDefaultedArgumentBenchmarks.benchSumTCOWithNamedArgs": 96.16226124190476,
+    "org.enso.interpreter.bench.benchmarks.semantic.RecursionBenchmarks.benchNestedThunkSum": 89.51477806713278,
+    "org.enso.interpreter.bench.benchmarks.semantic.RecursionBenchmarks.benchOversaturatedRecursiveCall": 96.24813261838187,
+    "org.enso.interpreter.bench.benchmarks.semantic.RecursionBenchmarks.benchSumRecursive": 0.0010543298972510889,
+    "org.enso.interpreter.bench.benchmarks.semantic.RecursionBenchmarks.benchSumStateTCO": 89.34903787413043,
+    "org.enso.interpreter.bench.benchmarks.semantic.RecursionBenchmarks.benchSumTCO": 96.23194385220526,
+    "org.enso.interpreter.bench.benchmarks.semantic.RecursionBenchmarks.benchSumTCOFoldLike": 96.23463919190013,
+    "org.enso.interpreter.bench.benchmarks.semantic.RecursionBenchmarks.benchSumTCOWithEval": 96.26236899191863,
+    "org.enso.interpreter.bench.benchmarks.semantic.StringBenchmarks.lengthOfStrings": 0.03976535943729493,
+    "org.enso.interpreter.bench.benchmarks.semantic.TypePatternBenchmarks.matchOverAny": 0.004596861581218415,
+    "org.enso.interpreter.bench.benchmarks.semantic.TypePatternBenchmarks.matchOverDecimal": 0.004529090061992607,
+    "org.enso.interpreter.bench.benchmarks.semantic.VectorBenchmarks.averageAbstractList": 0.08897724232403026,
+    "org.enso.interpreter.bench.benchmarks.semantic.VectorBenchmarks.averageOverArray": 0.0012778014554839377,
+    "org.enso.interpreter.bench.benchmarks.semantic.VectorBenchmarks.averageOverArrayProxy": 0.001398676910366734,
+    "org.enso.interpreter.bench.benchmarks.semantic.VectorBenchmarks.averageOverArrayProxyNew": 0.0013961093213404475,
+    "org.enso.interpreter.bench.benchmarks.semantic.VectorBenchmarks.averageOverPolyglotArray": 0.0012769994398304607,
+    "org.enso.interpreter.bench.benchmarks.semantic.VectorBenchmarks.averageOverPolyglotVector": 0.0012685296414463806,
+    "org.enso.interpreter.bench.benchmarks.semantic.VectorBenchmarks.averageOverSlice": 0.001639542812935428,
+    "org.enso.interpreter.bench.benchmarks.semantic.VectorBenchmarks.averageOverVector": 0.0012693333600663815
+  }
+}

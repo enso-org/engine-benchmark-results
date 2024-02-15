@@ -1,0 +1,54 @@
+{
+  "bench_run": {
+    "id": "3691620974",
+    "html_url": "https://github.com/enso-org/enso/actions/runs/3691620974",
+    "run_attempt": 1,
+    "event": "push",
+    "display_title": "AvoidIdInstrumentationTagTest to control which nodes are instrumentab\u2026",
+    "head_commit": {
+      "id": "1dfcf1cafc939b745d86e19cea4a982db79d9f6c",
+      "message": "AvoidIdInstrumentationTagTest to control which nodes are instrumentable (#3977)\n\nFighting with _too many messages being delivered_ I wrote a test that dumps information about `AvoidIdInstrumentationTag` - every node that has `AvoidIdInstrumentationTag` is excluded from the instrumentation. However, when I look at the output for\n```\nfrom Standard.Base import all\nimport Standard.Visualization\n\nrun n = 0.up_to n . map i-> 1.noise * i\n```\nI see that `1.noise` didn't have the tag. Now there is [AvoidIdInstrumentationTagTest.java](https://github.com/enso-org/enso/pull/3973/files#diff-32cd9240bda2bfe0e5904695ced008daba86fefb3d137ac401997f4265fa50eb) which can be used to collect all programs where _too many messages is being delivered_. Just add a program, identify _isLambda_ and verify all nodes are properly tagged.",
+      "timestamp": "2022-12-14T04:00:38Z",
+      "author": {
+        "name": "Jaroslav Tulach"
+      },
+      "url": "https://github.com/enso-org/enso/commit/1dfcf1cafc939b745d86e19cea4a982db79d9f6c"
+    }
+  },
+  "label_score_dict": {
+    "org.enso.interpreter.bench.benchmarks.RuntimeCacheBenchmarks.benchCacheGet": 0.005646688362831667,
+    "org.enso.interpreter.bench.benchmarks.semantic.AtomBenchmarks.benchGenerateList": 8.142517724540813,
+    "org.enso.interpreter.bench.benchmarks.semantic.AtomBenchmarks.benchGenerateListQualified": 7.971941800153357,
+    "org.enso.interpreter.bench.benchmarks.semantic.AtomBenchmarks.benchMapReverseCurryList": 2.9436322655437782e-05,
+    "org.enso.interpreter.bench.benchmarks.semantic.AtomBenchmarks.benchMapReverseList": 2.921949564733297e-05,
+    "org.enso.interpreter.bench.benchmarks.semantic.AtomBenchmarks.benchReverseList": 2.9151500848451375e-05,
+    "org.enso.interpreter.bench.benchmarks.semantic.AtomBenchmarks.benchReverseListMethods": 2.917727295488885e-05,
+    "org.enso.interpreter.bench.benchmarks.semantic.AtomBenchmarks.benchSumList": 2.9213606505431774e-05,
+    "org.enso.interpreter.bench.benchmarks.semantic.AtomBenchmarks.benchSumListFallback": 2.9190085461349576e-05,
+    "org.enso.interpreter.bench.benchmarks.semantic.AtomBenchmarks.benchSumListMethods": 2.915674323861397e-05,
+    "org.enso.interpreter.bench.benchmarks.semantic.AtomBenchmarks.sumListLeftFold": 2.917796858377315e-05,
+    "org.enso.interpreter.bench.benchmarks.semantic.CallableBenchmarks.benchSumTCOfromCall": 96.33392363606654,
+    "org.enso.interpreter.bench.benchmarks.semantic.CallableBenchmarks.benchSumTCOmethodCall": 96.26937224144243,
+    "org.enso.interpreter.bench.benchmarks.semantic.CallableBenchmarks.benchSumTCOmethodCallWithDefaultedArguments": 96.23867214405918,
+    "org.enso.interpreter.bench.benchmarks.semantic.CallableBenchmarks.benchSumTCOmethodCallWithNamedArguments": 96.23250291620897,
+    "org.enso.interpreter.bench.benchmarks.semantic.NamedDefaultedArgumentBenchmarks.benchSumTCOWithDefaultArgs": 96.29173890626409,
+    "org.enso.interpreter.bench.benchmarks.semantic.NamedDefaultedArgumentBenchmarks.benchSumTCOWithNamedArgs": 96.23068961557098,
+    "org.enso.interpreter.bench.benchmarks.semantic.RecursionBenchmarks.benchNestedThunkSum": 89.49132202664205,
+    "org.enso.interpreter.bench.benchmarks.semantic.RecursionBenchmarks.benchOversaturatedRecursiveCall": 96.31895201072692,
+    "org.enso.interpreter.bench.benchmarks.semantic.RecursionBenchmarks.benchSumRecursive": 0.0010398220022102198,
+    "org.enso.interpreter.bench.benchmarks.semantic.RecursionBenchmarks.benchSumStateTCO": 89.33286883263547,
+    "org.enso.interpreter.bench.benchmarks.semantic.RecursionBenchmarks.benchSumTCO": 96.21873048741563,
+    "org.enso.interpreter.bench.benchmarks.semantic.RecursionBenchmarks.benchSumTCOFoldLike": 96.21022825148404,
+    "org.enso.interpreter.bench.benchmarks.semantic.RecursionBenchmarks.benchSumTCOWithEval": 96.2905356908183,
+    "org.enso.interpreter.bench.benchmarks.semantic.StringBenchmarks.lengthOfStrings": 0.04167100741901669,
+    "org.enso.interpreter.bench.benchmarks.semantic.TypePatternBenchmarks.matchOverAny": 0.005737012738519843,
+    "org.enso.interpreter.bench.benchmarks.semantic.TypePatternBenchmarks.matchOverDecimal": 0.0049505662948929555,
+    "org.enso.interpreter.bench.benchmarks.semantic.VectorBenchmarks.averageAbstractList": 0.11699228549784298,
+    "org.enso.interpreter.bench.benchmarks.semantic.VectorBenchmarks.averageOverArray": 0.01636205872168328,
+    "org.enso.interpreter.bench.benchmarks.semantic.VectorBenchmarks.averageOverArrayProxy": 0.01834518959713075,
+    "org.enso.interpreter.bench.benchmarks.semantic.VectorBenchmarks.averageOverPolyglotArray": 0.016356651429259555,
+    "org.enso.interpreter.bench.benchmarks.semantic.VectorBenchmarks.averageOverPolyglotVector": 0.014955890115173592,
+    "org.enso.interpreter.bench.benchmarks.semantic.VectorBenchmarks.averageOverSlice": 0.01697732753917715,
+    "org.enso.interpreter.bench.benchmarks.semantic.VectorBenchmarks.averageOverVector": 0.014996312106992824
+  }
+}

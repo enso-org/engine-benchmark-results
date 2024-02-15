@@ -1,0 +1,62 @@
+{
+  "bench_run": {
+    "id": "3760166622",
+    "html_url": "https://github.com/enso-org/enso/actions/runs/3760166622",
+    "run_attempt": 1,
+    "event": "push",
+    "display_title": "Grid-view based dropdown component (#3985)",
+    "head_commit": {
+      "id": "4042b5b237782c46606d2695aba1d2043a797e03",
+      "message": "Grid-view based dropdown component (#3985)\n\nImplements https://www.pivotaltracker.com/n/projects/2539304/stories/184023380\n\nDropdown component. Planned to be used in nodes as a single and multiple selection widget, both for static and dynamically loaded values. Initial support is focused on static data, with limited support for dynamic sources. Notably, loading states are not supported yet. Full support for that is planned to be added later with widget lazy-loading.\n\n- Supports single and multiple selections.\n- Dedicated API for providing a static list of all entries.\n- Range-based query API for dynamically loading data as it is scrolled (only basic support - will need more work for proper async lazy-loading).\n- Internal entry cache and query batching to avoid querying data one by one (the batching for now is very basic, will have to be improved for proper lazy-loading).\n- Automatic dropdown width adjustment based on the entry label lengths, up to a set max allowed value.\n- Open and close animation.\n- Keyboard support for focusing and selecting entries.\n\n![image](https://user-images.githubusercontent.com/919491/207866293-de2e3fef-c93b-48cc-8253-11c186d223fd.png)\n\n# Important Notes\nImplementing the dropdown on top of grid-view have uncovered some assumptions around grid-view layers. It was assumed to always be a part of the component browser. Removing that assumption required a mechanism for propagating camera update information through layer tree. This is now implemented using a `camera_parent` layer field. Ideally each layer should simply have at most a single parent, and camera inheritance would follow that. That refactor turned out to be quite involved, so right now the simpler temporary solution is introduced in order to not delay this PR further.",
+      "timestamp": "2022-12-22T18:19:40Z",
+      "author": {
+        "name": "Pawe\u0142 Grabarz"
+      },
+      "url": "https://github.com/enso-org/enso/commit/4042b5b237782c46606d2695aba1d2043a797e03"
+    }
+  },
+  "label_score_dict": {
+    "org.enso.interpreter.bench.benchmarks.RuntimeCacheBenchmarks.benchCacheGet": 0.007609240257452072,
+    "org.enso.interpreter.bench.benchmarks.semantic.ArrayProxyBenchmarks.sumOverComputingProxy": 0.17283958646613293,
+    "org.enso.interpreter.bench.benchmarks.semantic.ArrayProxyBenchmarks.sumOverDelegatingProxy": 5.876977372549038,
+    "org.enso.interpreter.bench.benchmarks.semantic.ArrayProxyBenchmarks.sumOverVector": 1.879472294740512,
+    "org.enso.interpreter.bench.benchmarks.semantic.ArrayProxyBenchmarks.sumOverVectorBackedByComputingProxy": 0.14404972945029476,
+    "org.enso.interpreter.bench.benchmarks.semantic.ArrayProxyBenchmarks.sumOverVectorBackedByDelegatingProxy": 4.164535599553821,
+    "org.enso.interpreter.bench.benchmarks.semantic.AtomBenchmarks.benchGenerateList": 7.870416878316429,
+    "org.enso.interpreter.bench.benchmarks.semantic.AtomBenchmarks.benchGenerateListQualified": 8.145659041573166,
+    "org.enso.interpreter.bench.benchmarks.semantic.AtomBenchmarks.benchMapReverseCurryList": 2.9235503663163524e-05,
+    "org.enso.interpreter.bench.benchmarks.semantic.AtomBenchmarks.benchMapReverseList": 2.9210118750228065e-05,
+    "org.enso.interpreter.bench.benchmarks.semantic.AtomBenchmarks.benchReverseList": 2.927600797885178e-05,
+    "org.enso.interpreter.bench.benchmarks.semantic.AtomBenchmarks.benchReverseListMethods": 2.9207545072296543e-05,
+    "org.enso.interpreter.bench.benchmarks.semantic.AtomBenchmarks.benchSumList": 2.921984492602846e-05,
+    "org.enso.interpreter.bench.benchmarks.semantic.AtomBenchmarks.benchSumListFallback": 2.9223183027803587e-05,
+    "org.enso.interpreter.bench.benchmarks.semantic.AtomBenchmarks.benchSumListMethods": 2.9224995952109507e-05,
+    "org.enso.interpreter.bench.benchmarks.semantic.AtomBenchmarks.sumListLeftFold": 2.9235054298075002e-05,
+    "org.enso.interpreter.bench.benchmarks.semantic.CallableBenchmarks.benchSumTCOfromCall": 96.23260476244106,
+    "org.enso.interpreter.bench.benchmarks.semantic.CallableBenchmarks.benchSumTCOmethodCall": 96.23790906666667,
+    "org.enso.interpreter.bench.benchmarks.semantic.CallableBenchmarks.benchSumTCOmethodCallWithDefaultedArguments": 96.18756387931576,
+    "org.enso.interpreter.bench.benchmarks.semantic.CallableBenchmarks.benchSumTCOmethodCallWithNamedArguments": 96.2164153094036,
+    "org.enso.interpreter.bench.benchmarks.semantic.CurriedFunctionBenchmarks.averageCurried": 0.12860319920268246,
+    "org.enso.interpreter.bench.benchmarks.semantic.CurriedFunctionBenchmarks.averageLambda": 0.14785722911264224,
+    "org.enso.interpreter.bench.benchmarks.semantic.NamedDefaultedArgumentBenchmarks.benchSumTCOWithDefaultArgs": 96.22672277588535,
+    "org.enso.interpreter.bench.benchmarks.semantic.NamedDefaultedArgumentBenchmarks.benchSumTCOWithNamedArgs": 96.23679797505316,
+    "org.enso.interpreter.bench.benchmarks.semantic.RecursionBenchmarks.benchNestedThunkSum": 89.38603748059845,
+    "org.enso.interpreter.bench.benchmarks.semantic.RecursionBenchmarks.benchOversaturatedRecursiveCall": 96.24573025499768,
+    "org.enso.interpreter.bench.benchmarks.semantic.RecursionBenchmarks.benchSumRecursive": 0.0010338163584256352,
+    "org.enso.interpreter.bench.benchmarks.semantic.RecursionBenchmarks.benchSumStateTCO": 89.41774645339613,
+    "org.enso.interpreter.bench.benchmarks.semantic.RecursionBenchmarks.benchSumTCO": 96.22673774213592,
+    "org.enso.interpreter.bench.benchmarks.semantic.RecursionBenchmarks.benchSumTCOFoldLike": 96.30519976656497,
+    "org.enso.interpreter.bench.benchmarks.semantic.RecursionBenchmarks.benchSumTCOWithEval": 96.2380688456773,
+    "org.enso.interpreter.bench.benchmarks.semantic.StringBenchmarks.lengthOfStrings": 0.039833614828405375,
+    "org.enso.interpreter.bench.benchmarks.semantic.TypePatternBenchmarks.matchOverAny": 0.004152844118529732,
+    "org.enso.interpreter.bench.benchmarks.semantic.TypePatternBenchmarks.matchOverDecimal": 0.004182787426701336,
+    "org.enso.interpreter.bench.benchmarks.semantic.VectorBenchmarks.averageAbstractList": 0.09090562681092626,
+    "org.enso.interpreter.bench.benchmarks.semantic.VectorBenchmarks.averageOverArray": 0.001273622132333539,
+    "org.enso.interpreter.bench.benchmarks.semantic.VectorBenchmarks.averageOverArrayProxy": 0.0013961570411016345,
+    "org.enso.interpreter.bench.benchmarks.semantic.VectorBenchmarks.averageOverArrayProxyNew": 0.0013965289000042692,
+    "org.enso.interpreter.bench.benchmarks.semantic.VectorBenchmarks.averageOverPolyglotArray": 0.0012780103812457676,
+    "org.enso.interpreter.bench.benchmarks.semantic.VectorBenchmarks.averageOverPolyglotVector": 0.0012724763782430118,
+    "org.enso.interpreter.bench.benchmarks.semantic.VectorBenchmarks.averageOverSlice": 0.0016349746873568119,
+    "org.enso.interpreter.bench.benchmarks.semantic.VectorBenchmarks.averageOverVector": 0.0012684217798721892
+  }
+}

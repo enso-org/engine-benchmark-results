@@ -1,0 +1,57 @@
+{
+  "bench_run": {
+    "id": "3735292565",
+    "html_url": "https://github.com/enso-org/enso/actions/runs/3735292565",
+    "run_attempt": 1,
+    "event": "push",
+    "display_title": "Visual indication of outdated VCS snapshot (#3950)",
+    "head_commit": {
+      "id": "4b28f8f8f034304d15ebbf5a74de73a6006292df",
+      "message": "Visual indication of outdated VCS snapshot (#3950)\n\nThis PR provides a visual indication of whether the project's current state differs from the most recent snapshot saved in the VCS. The project name displayed in the IDE changes to a darker text to indicate that the VCS snapshot is outdated, and back to a lighter text when the current project state corresponds to the last saved VCS snapshot.\n\nhttps://user-images.githubusercontent.com/117099775/208088438-20dfc2aa-2a7d-47bf-bc12-3d3dff7a4974.mp4\n\nThe outdated project snapshot indicator is set when:\n* A node is moved.\n* A node is added or removed.\n* The text editor is used to edit the text.\n* The project is auto-saved, and the auto-saved project state does not correspond to the last saved snapshot in the VCS.\n\nThe outdated project snapshot indicator is cleared when:\n* A new project snapshot is successfully saved using `ctrl+s`.\n* The project is auto-saved, and the auto-saved project state is confirmed to correspond to the last saved snapshot in the VCS. This occurs, for example, when a project change is undone and the project is reverted to the last saved snapshot state.\n\nThe auto-save events do not occur immediately after a project change but have a short delay, thus the VCS status update is affected by the same delay when triggered by an auto-save event.",
+      "timestamp": "2022-12-19T21:22:33Z",
+      "author": {
+        "name": "Galin Bajlekov"
+      },
+      "url": "https://github.com/enso-org/enso/commit/4b28f8f8f034304d15ebbf5a74de73a6006292df"
+    }
+  },
+  "label_score_dict": {
+    "org.enso.interpreter.bench.benchmarks.RuntimeCacheBenchmarks.benchCacheGet": 0.007375614829359035,
+    "org.enso.interpreter.bench.benchmarks.semantic.AtomBenchmarks.benchGenerateList": 9.704099666910642,
+    "org.enso.interpreter.bench.benchmarks.semantic.AtomBenchmarks.benchGenerateListQualified": 11.722574679841014,
+    "org.enso.interpreter.bench.benchmarks.semantic.AtomBenchmarks.benchMapReverseCurryList": 2.9215946387293975e-05,
+    "org.enso.interpreter.bench.benchmarks.semantic.AtomBenchmarks.benchMapReverseList": 2.9243323840159778e-05,
+    "org.enso.interpreter.bench.benchmarks.semantic.AtomBenchmarks.benchReverseList": 2.9236896905673486e-05,
+    "org.enso.interpreter.bench.benchmarks.semantic.AtomBenchmarks.benchReverseListMethods": 2.9245150542570057e-05,
+    "org.enso.interpreter.bench.benchmarks.semantic.AtomBenchmarks.benchSumList": 2.9193580713384023e-05,
+    "org.enso.interpreter.bench.benchmarks.semantic.AtomBenchmarks.benchSumListFallback": 2.9551112828371333e-05,
+    "org.enso.interpreter.bench.benchmarks.semantic.AtomBenchmarks.benchSumListMethods": 2.9280098779621626e-05,
+    "org.enso.interpreter.bench.benchmarks.semantic.AtomBenchmarks.sumListLeftFold": 2.9195700584237803e-05,
+    "org.enso.interpreter.bench.benchmarks.semantic.CallableBenchmarks.benchSumTCOfromCall": 96.2917911460564,
+    "org.enso.interpreter.bench.benchmarks.semantic.CallableBenchmarks.benchSumTCOmethodCall": 96.18021644018492,
+    "org.enso.interpreter.bench.benchmarks.semantic.CallableBenchmarks.benchSumTCOmethodCallWithDefaultedArguments": 96.22496132314377,
+    "org.enso.interpreter.bench.benchmarks.semantic.CallableBenchmarks.benchSumTCOmethodCallWithNamedArguments": 96.19658574187703,
+    "org.enso.interpreter.bench.benchmarks.semantic.CurriedFunctionBenchmarks.averageCurried": 0.13096239153453546,
+    "org.enso.interpreter.bench.benchmarks.semantic.CurriedFunctionBenchmarks.averageLambda": 0.148689534802971,
+    "org.enso.interpreter.bench.benchmarks.semantic.NamedDefaultedArgumentBenchmarks.benchSumTCOWithDefaultArgs": 96.24644421697643,
+    "org.enso.interpreter.bench.benchmarks.semantic.NamedDefaultedArgumentBenchmarks.benchSumTCOWithNamedArgs": 96.25163471110494,
+    "org.enso.interpreter.bench.benchmarks.semantic.RecursionBenchmarks.benchNestedThunkSum": 89.47683585555494,
+    "org.enso.interpreter.bench.benchmarks.semantic.RecursionBenchmarks.benchOversaturatedRecursiveCall": 96.31489072033573,
+    "org.enso.interpreter.bench.benchmarks.semantic.RecursionBenchmarks.benchSumRecursive": 0.0010291204343436308,
+    "org.enso.interpreter.bench.benchmarks.semantic.RecursionBenchmarks.benchSumStateTCO": 89.28793828811577,
+    "org.enso.interpreter.bench.benchmarks.semantic.RecursionBenchmarks.benchSumTCO": 96.2751344998798,
+    "org.enso.interpreter.bench.benchmarks.semantic.RecursionBenchmarks.benchSumTCOFoldLike": 96.2316336686454,
+    "org.enso.interpreter.bench.benchmarks.semantic.RecursionBenchmarks.benchSumTCOWithEval": 96.41920375067535,
+    "org.enso.interpreter.bench.benchmarks.semantic.StringBenchmarks.lengthOfStrings": 0.03979734865575131,
+    "org.enso.interpreter.bench.benchmarks.semantic.TypePatternBenchmarks.matchOverAny": 0.004180806274605954,
+    "org.enso.interpreter.bench.benchmarks.semantic.TypePatternBenchmarks.matchOverDecimal": 0.005105800256102828,
+    "org.enso.interpreter.bench.benchmarks.semantic.VectorBenchmarks.averageAbstractList": 0.10568117464497448,
+    "org.enso.interpreter.bench.benchmarks.semantic.VectorBenchmarks.averageOverArray": 0.015434120857317574,
+    "org.enso.interpreter.bench.benchmarks.semantic.VectorBenchmarks.averageOverArrayProxy": 0.015908382082198302,
+    "org.enso.interpreter.bench.benchmarks.semantic.VectorBenchmarks.averageOverArrayProxyNew": 0.018655144465610125,
+    "org.enso.interpreter.bench.benchmarks.semantic.VectorBenchmarks.averageOverPolyglotArray": 0.015405379738571168,
+    "org.enso.interpreter.bench.benchmarks.semantic.VectorBenchmarks.averageOverPolyglotVector": 0.01360032061735979,
+    "org.enso.interpreter.bench.benchmarks.semantic.VectorBenchmarks.averageOverSlice": 0.015424194248101522,
+    "org.enso.interpreter.bench.benchmarks.semantic.VectorBenchmarks.averageOverVector": 0.013663952150225278
+  }
+}
