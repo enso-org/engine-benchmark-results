@@ -18,8 +18,8 @@ const indexResp = await fetch("http://localhost:5500/cache/index.json");
 const indexContent = await indexResp.json();
 const index = Index.fromJson(indexContent);
 console.log("Index loaded");
-const startDate = new Date("2022-12-13T14:36:56Z");
-const endDate = new Date("2023-01-28T04:37:40Z");
+const startDate = new Date("2024-05-01");
+const endDate = new Date("2024-05-30");
 const fnames = index.getFilenamesFromDate(startDate, endDate);
 console.log("Fetching ", fnames.length, " files");
 
