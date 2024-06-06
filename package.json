@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc && vite build",
+    "build": "npm run validate-cache && vue-tsc && vite build",
     "validate-cache": "node ./scripts/validate_cache.js",
     "preview": "vite preview"
   },
