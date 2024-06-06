@@ -8,7 +8,7 @@ import addFormats from "ajv-formats"
 const ajv = new Ajv();
 addFormats(ajv);
 
-const schemaPath = "./cache/schema.json";
+const schemaPath = "./schema/cache-v1.json";
 
 const schema = JSON.parse(readFileSync(schemaPath, "utf8"));
 const validate = ajv.compile(schema);
