@@ -14,7 +14,7 @@ const branches = ["develop", "wip/akirathan/1234-some-issue"];
 const minDate = new Date("2022-12-01");
 const maxDate = new Date();
 
-const indexResp = await fetch("http://localhost:5500/cache/index.json");
+const indexResp = await fetch(`${FS_URL}/cache/index.json`);
 const indexContent = await indexResp.json();
 const index = Index.fromJson(indexContent);
 console.log("Index loaded");
@@ -24,7 +24,7 @@ const fnames = index.getFilenamesFromDate(startDate, endDate);
 console.log("Fetching ", fnames.length, " files");
 
 for (const fname of fnames) {
-  const resp = await fetch("http://localhost:5500/" + fname);
+  const resp = await fetch(FS_URL + "/" + fname);
   const content = await resp.text();
   processSingleFile(content);
 }
