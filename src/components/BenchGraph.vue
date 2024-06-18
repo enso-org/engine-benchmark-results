@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { defineProps, ref } from "vue"
 import { Line } from "vue-chartjs"
+import "chartjs-adapter-date-fns"
 import {
   Chart as ChartJS,
   Title,
@@ -13,9 +14,10 @@ import {
   type ChartEvent,
   type ActiveElement,
   Chart,
-  type Point
+ChartOptions,
+TimeScale,
 } from "chart.js"
-import type { BenchDataPoint, BenchRun } from "~/utils/data"
+import type { BenchDataPoint, BenchRun } from "../utils/data"
 import BenchElemSelection from "./BenchElemSelection.vue"
 
 export interface BenchData {
@@ -33,9 +35,9 @@ const props = defineProps<{
 
 console.assert(props.benchData.size > 0, "No bench data provided")
 
-ChartJS.register(Title, Tooltip, Legend, LineElement, CategoryScale, LinearScale, PointElement)
+ChartJS.register(Title, Tooltip, Legend, LineElement, CategoryScale, LinearScale, PointElement, TimeScale)
 
-// Selected reactive values
+// Reactive values for the selected datapoint
 const scoreSel = ref<number | null>(null)
 const commitDateSel = ref<string | null>(null)
 const commitMsgSel = ref<string | null>(null)
@@ -99,18 +101,24 @@ function onClick(event: ChartEvent, elements: ActiveElement[], chart: Chart) {
     scoreDiffPercSel.value = null
   }
 }
-datasets[0].data[0].pointRadius = 10;
-const chartData = ref({
+
+const chartData = {
   datasets: datasets
-})
-const chartOpts = ref({
+}
+const chartOpts: ChartOptions<"line"> = {
   onClick: onClick,
+  scales: {
+    x: {
+      type: "time"
+    }
+  },
   elements: {
     point: {
       radius: 3
     }
   },
-})
+}
+
 </script>
 
 <template>
