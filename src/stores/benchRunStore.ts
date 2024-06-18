@@ -1,8 +1,7 @@
+import { defineStore } from 'pinia'
+import type { BenchRun } from '../utils/data'
 
-import { defineStore } from "pinia"
-import type { BenchRun } from "../utils/data"
-
-export const useBenchRunStore = defineStore("benchRun", {
+export const useBenchRunStore = defineStore('benchRun', {
   state: () => ({
     benchRuns: [] as BenchRun[],
   }),
@@ -12,7 +11,7 @@ export const useBenchRunStore = defineStore("benchRun", {
       this.benchRuns.push(benchRun)
     },
     findBenchRunsOnCommits(commitIds: string[]): BenchRun[] {
-      return this.benchRuns.filter(b => commitIds.includes(b.headCommit.id))
-    }
-  }
+      return this.benchRuns.filter((b) => commitIds.includes(b.headCommit.id))
+    },
+  },
 })

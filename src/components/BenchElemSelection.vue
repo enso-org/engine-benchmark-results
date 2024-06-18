@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed } from 'vue'
 
 const props = defineProps<{
-  score: number | null,
-  scoreDiff: number | null,
-  scoreDiffPerc: number | null,
-  commitDate: string | null,
+  score: number | null
+  scoreDiff: number | null
+  scoreDiffPerc: number | null
+  commitDate: string | null
   commitMessage: string | null
 }>()
 
-const undefinedMsg = "No selection"
+const undefinedMsg = 'No selection'
 const scoreMsg = computed(() => {
   if (props.score) {
     return props.score.toPrecision(5)
@@ -17,17 +17,15 @@ const scoreMsg = computed(() => {
     return undefinedMsg
   }
 })
-const commitDateMsg = computed(() => props.commitDate ? props.commitDate : undefinedMsg)
-const commitMessageMsg = computed(() => props.commitMessage ? props.commitMessage : undefinedMsg)
+const commitDateMsg = computed(() => (props.commitDate ? props.commitDate : undefinedMsg))
+const commitMessageMsg = computed(() => (props.commitMessage ? props.commitMessage : undefinedMsg))
 const scoreDiffMsg = computed(() => {
   if (props.scoreDiff && props.scoreDiffPerc) {
-    return props.scoreDiff.toPrecision(5) + " (" + props.scoreDiffPerc.toPrecision(5) + "%)"
+    return props.scoreDiff.toPrecision(5) + ' (' + props.scoreDiffPerc.toPrecision(5) + '%)'
   } else {
-    return "NA"
+    return 'NA'
   }
-
 })
-
 </script>
 
 <template>

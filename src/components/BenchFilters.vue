@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref } from 'vue'
 
 const today = new Date(Date.now())
 // today - 14 days
@@ -10,9 +10,7 @@ const since = ref(daysAgo)
 const until = ref(today)
 
 // emit events
-const emit = defineEmits<{
-
-}>()
+const emit = defineEmits<{}>()
 
 const props = defineProps<{
   minDate: Date
@@ -20,18 +18,15 @@ const props = defineProps<{
   branches: string[]
 }>()
 
-
-const selectedBranches = ref<string[]>(["develop"])
+const selectedBranches = ref<string[]>(['develop'])
 
 function updateBenchData() {
-  console.log("Updating bench data")
-  console.log("Since:", since.value)
-  console.log("Until:", until.value)
-  console.log("Selected branches:", selectedBranches.value)
+  console.log('Updating bench data')
+  console.log('Since:', since.value)
+  console.log('Until:', until.value)
+  console.log('Selected branches:', selectedBranches.value)
 }
-
 </script>
-
 
 <template>
   <v-container>
@@ -39,9 +34,7 @@ function updateBenchData() {
     <v-row>
       <v-col>
         <v-card :variant="'outlined'" class="bench-filters">
-          <v-card-title class="filters-title">
-            Filters
-          </v-card-title>
+          <v-card-title class="filters-title"> Filters </v-card-title>
           <v-card-text>
             <v-container>
               <v-row>
@@ -73,9 +66,9 @@ function updateBenchData() {
     <v-row>
       <v-col>
         <v-autocomplete
+          v-model="selectedBranches"
           label="Branches"
           :items="props.branches"
-          v-model="selectedBranches"
           multiple
         ></v-autocomplete>
       </v-col>
@@ -83,17 +76,13 @@ function updateBenchData() {
 
     <v-row>
       <v-col>
-        <v-btn 
-          size="x-large" 
-          :location="'center'" 
-          :color="'primary'"
-          @click="updateBenchData"
-        >Filter</v-btn>
+        <v-btn size="x-large" :location="'center'" :color="'primary'" @click="updateBenchData"
+          >Filter</v-btn
+        >
       </v-col>
     </v-row>
   </v-container>
 </template>
-
 
 <style scoped>
 .filters-title {

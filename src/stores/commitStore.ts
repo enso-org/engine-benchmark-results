@@ -1,7 +1,7 @@
-import { defineStore } from "pinia"
-import type { Commit } from "../utils/data"
+import { defineStore } from 'pinia'
+import type { Commit } from '../utils/data'
 
-export const useCommitStore = defineStore("commit", {
+export const useCommitStore = defineStore('commit', {
   state: () => ({
     commits: [] as Commit[],
   }),
@@ -11,11 +11,10 @@ export const useCommitStore = defineStore("commit", {
       this.commits.push(commit)
     },
     findCommitByID(id: string): Commit | null {
-      return this.commits.find(c => c.id === id) ?? null
+      return this.commits.find((c) => c.id === id) ?? null
     },
     findCommitsBetween(since: Date, until: Date): Commit[] {
-      return this.commits.filter(c => c.timestamp >= since && c.timestamp <= until)
-    }
-  }
+      return this.commits.filter((c) => c.timestamp >= since && c.timestamp <= until)
+    },
+  },
 })
-

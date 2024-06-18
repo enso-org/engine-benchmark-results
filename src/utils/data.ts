@@ -1,7 +1,6 @@
-import { useCommitStore } from "../stores/commitStore"
-import { useBenchRunStore } from "../stores/benchRunStore"
-import { useDataPointStore } from "../stores/dataPointsStore"
-
+import { useBenchRunStore } from '../stores/benchRunStore'
+import { useCommitStore } from '../stores/commitStore'
+import { useDataPointStore } from '../stores/dataPointsStore'
 
 export interface Commit {
   id: string
@@ -49,7 +48,7 @@ export function processSingleFile(content: string): void {
     message: commitMsg,
     author: commitAuthor,
     url: commitUrl,
-    timestamp: commitTimestamp
+    timestamp: commitTimestamp,
   }
   commitStore.addCommit(commit)
   const benchRunModel: BenchRun = {
@@ -58,7 +57,7 @@ export function processSingleFile(content: string): void {
     runAttempt: runAttempt,
     event: event,
     displayTitle: displayTitle,
-    headCommit: commit
+    headCommit: commit,
   }
   benchRunStore.addBenchRun(benchRunModel)
   const scoreDict = jsObj['label_score_dict']
@@ -67,7 +66,7 @@ export function processSingleFile(content: string): void {
     const dataPoint: BenchDataPoint = {
       label: label,
       score: scoreNum,
-      benchRun: benchRunModel
+      benchRun: benchRunModel,
     }
     dataPointStore.addDataPoint(dataPoint)
   }
@@ -94,7 +93,7 @@ export class Index {
   }
 
   constructor(map: Map<string, Date>) {
-    this.content = map;
+    this.content = map
   }
 
   public getFilenamesFromDate(startDate: Date, endDate: Date): string[] {
@@ -107,6 +106,3 @@ export class Index {
     return filenames
   }
 }
-
-
-

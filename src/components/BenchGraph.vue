@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { defineProps, ref } from "vue"
-import { Line } from "vue-chartjs"
-import "chartjs-adapter-date-fns"
+import { defineProps, ref } from 'vue'
+import { Line } from 'vue-chartjs'
+import 'chartjs-adapter-date-fns'
 import {
   Chart as ChartJS,
   Title,
@@ -14,11 +14,11 @@ import {
   type ChartEvent,
   type ActiveElement,
   Chart,
-ChartOptions,
-TimeScale,
-} from "chart.js"
-import type { BenchDataPoint, BenchRun } from "../utils/data"
-import BenchElemSelection from "./BenchElemSelection.vue"
+  ChartOptions,
+  TimeScale,
+} from 'chart.js'
+import type { BenchDataPoint, BenchRun } from '../utils/data'
+import BenchElemSelection from './BenchElemSelection.vue'
 
 export interface BenchData {
   score: number
@@ -33,9 +33,18 @@ const props = defineProps<{
   benchData: Map<string, BenchData[]>
 }>()
 
-console.assert(props.benchData.size > 0, "No bench data provided")
+console.assert(props.benchData.size > 0, 'No bench data provided')
 
-ChartJS.register(Title, Tooltip, Legend, LineElement, CategoryScale, LinearScale, PointElement, TimeScale)
+ChartJS.register(
+  Title,
+  Tooltip,
+  Legend,
+  LineElement,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  TimeScale,
+)
 
 // Reactive values for the selected datapoint
 const scoreSel = ref<number | null>(null)
@@ -60,14 +69,14 @@ const datasets = Array.from(props.benchData.entries()).map(([branch, benchData])
     label: branch,
     data: data,
     fill: false,
-    pointRadius: 3
+    pointRadius: 3,
   }
   console.log(`Created dataset for branch ${branch} with data:`, ret)
   return ret
 })
 
 function onClick(event: ChartEvent, elements: ActiveElement[], chart: Chart) {
-  if (elements.length === 0 || event.type !== "click") {
+  if (elements.length === 0 || event.type !== 'click') {
     return
   }
   const element = elements[0]
@@ -80,7 +89,7 @@ function onClick(event: ChartEvent, elements: ActiveElement[], chart: Chart) {
   const timestamp = data.x as Date
 
   console.log(
-    `Clicked on label(branch) ${branch} at ${timestamp} with score ${score}, index: ${index}`
+    `Clicked on label(branch) ${branch} at ${timestamp} with score ${score}, index: ${index}`,
   )
   // BenchData for the clicked element
   let benchData = props.benchData.get(branch)?.at(index) as BenchData
@@ -103,22 +112,21 @@ function onClick(event: ChartEvent, elements: ActiveElement[], chart: Chart) {
 }
 
 const chartData = {
-  datasets: datasets
+  datasets: datasets,
 }
-const chartOpts: ChartOptions<"line"> = {
+const chartOpts: ChartOptions<'line'> = {
   onClick: onClick,
   scales: {
     x: {
-      type: "time"
-    }
+      type: 'time',
+    },
   },
   elements: {
     point: {
-      radius: 3
-    }
+      radius: 3,
+    },
   },
 }
-
 </script>
 
 <template>
@@ -146,7 +154,6 @@ const chartOpts: ChartOptions<"line"> = {
     </v-card-text>
   </v-card>
 </template>
-
 
 <style scoped>
 .bench-graph {

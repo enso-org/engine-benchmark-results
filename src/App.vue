@@ -1,4 +1,3 @@
-
 <template>
   <Suspense>
     <MainPage />
@@ -9,5 +8,4 @@
 import MainPage from './components/MainPage.vue'
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

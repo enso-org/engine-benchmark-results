@@ -1,8 +1,7 @@
+import { defineStore } from 'pinia'
+import type { BenchDataPoint } from '../utils/data'
 
-import { defineStore } from "pinia"
-import type { BenchDataPoint } from "../utils/data"
-
-export const useDataPointStore = defineStore("dataPoint", {
+export const useDataPointStore = defineStore('dataPoint', {
   state: () => ({
     dataPoints: [] as BenchDataPoint[],
   }),
@@ -13,7 +12,7 @@ export const useDataPointStore = defineStore("dataPoint", {
     },
 
     findDataPointsOnBenchRun(benchRunId: string): BenchDataPoint[] {
-      return this.dataPoints.filter(dp => dp.benchRun.id === benchRunId)
-    }
-  }
+      return this.dataPoints.filter((dp) => dp.benchRun.id === benchRunId)
+    },
+  },
 })
