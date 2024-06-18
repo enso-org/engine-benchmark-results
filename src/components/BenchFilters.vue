@@ -1,24 +1,26 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-const today = new Date(Date.now())
-// today - 14 days
-let daysAgo = new Date()
-daysAgo.setDate(today.getDate() - 14)
-
-const since = ref(daysAgo)
-const until = ref(today)
-
-// emit events
 const emit = defineEmits<{}>()
 
+/**
+ * minDate: The minimum date that can be selected.
+ * maxDate: The maximum date that can be selected.
+ * since: The currently selected start date.
+ * until: The currently selected end date.
+ * branches: The list of all branches that can be selected.
+ */
 const props = defineProps<{
   minDate: Date
   maxDate: Date
+  since: Date
+  until: Date
   branches: string[]
 }>()
 
 const selectedBranches = ref<string[]>(['develop'])
+const since = ref(props.since)
+const until = ref(props.until)
 
 function updateBenchData() {
   console.log('Updating bench data')
