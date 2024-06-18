@@ -18,6 +18,7 @@ export interface BenchRun {
   event: string
   displayTitle: string
   headCommit: Commit
+  branch: string
 }
 
 export interface BenchDataPoint {
@@ -60,6 +61,7 @@ export function processSingleFile(content: string): void {
     event: event,
     displayTitle: displayTitle,
     headCommit: commit,
+    branch: 'develop',
   }
   benchRunStore.addBenchRun(benchRunModel)
   const scoreDict = jsObj['label_score_dict']

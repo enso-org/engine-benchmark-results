@@ -7,12 +7,14 @@
       :until="endDate"
       :branches="branches"
     />
-    <BenchGraph :benchData="devBenchGraphProps" :label="label" />
+    <div v-for="label in benchDatas.keys()" :key="label">
+      <BenchGraph :label="label" :benchData="benchDatas.get(label) ?? new Map()" />
+    </div>
   </v-container>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { Ref, ref } from 'vue'
 import { BenchDataPoint, Index } from '../utils/data'
 import { processSingleFile } from '../utils/data'
 import { type BenchData } from './BenchGraph.vue'
@@ -27,11 +29,31 @@ const minDate = new Date('2022-12-01')
 const maxDate = new Date()
 const startDate = ref(subDays(maxDate, DEFAULT_DAYS_TO_FETCH))
 const endDate = ref(maxDate)
-console.log('startDate', startDate.value)
-console.log('endDate', endDate.value)
 
 const labelStore = useLabelStore()
 const datapointStore = useDataPointStore()
+const benchRunStore = useBenchRunStore()
+
+// Load initial data
+const index = await loadIndex()
+await loadData(startDate.value, endDate.value)
+
+// label -> branch -> BenchData[]
+const benchDatas: Ref<Map<string, Map<string, BenchData[]>>> = ref(new Map())
+for (const label of labelStore.getAllLabels()) {
+  const labelBenchDatas = new Map()
+  for (const branch of branches.value) {
+    const dp = datapointStore.findDatapoints({
+      startDate: startDate.value,
+      endDate: endDate.value,
+      branch: branch,
+      label: label,
+    })
+    const benchData = transformDatapointProps(dp)
+    labelBenchDatas.set(branch, benchData)
+  }
+  benchDatas.value.set(label, labelBenchDatas)
+}
 
 /**
  * Fetches the index file.
@@ -84,9 +106,6 @@ for (const dp of devBenchDatapoints) {
   }
   devBenchData.push(benchData)
 }
-const devBenchGraphProps: Map<string, BenchData[]> = new Map()
-console.log('devBenchData', devBenchData)
-devBenchGraphProps.set('develop', devBenchData)
 </script>
 
 <style scoped></style>
