@@ -1,6 +1,7 @@
 import { useBenchRunStore } from '../stores/benchRunStore'
 import { useCommitStore } from '../stores/commitStore'
 import { useDataPointStore } from '../stores/dataPointsStore'
+import { useLabelStore } from '../stores/labelStore'
 
 export interface Commit {
   id: string
@@ -29,6 +30,7 @@ export function processSingleFile(content: string): void {
   const commitStore = useCommitStore()
   const benchRunStore = useBenchRunStore()
   const dataPointStore = useDataPointStore()
+  const labelStore = useLabelStore()
 
   const jsObj = JSON.parse(content)
   const benchRun = jsObj['bench_run']
@@ -62,6 +64,7 @@ export function processSingleFile(content: string): void {
   benchRunStore.addBenchRun(benchRunModel)
   const scoreDict = jsObj['label_score_dict']
   for (const [label, score] of Object.entries(scoreDict)) {
+    labelStore.addLabel(label)
     const scoreNum = Number.parseFloat(score as string)
     const dataPoint: BenchDataPoint = {
       label: label,

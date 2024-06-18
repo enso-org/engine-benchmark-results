@@ -14,5 +14,14 @@ export const useDataPointStore = defineStore('dataPoint', {
     findDataPointsOnBenchRun(benchRunId: string): BenchDataPoint[] {
       return this.dataPoints.filter((dp) => dp.benchRun.id === benchRunId)
     },
+
+    findDataPointsByLabel(label: string, start: Date, end: Date = new Date()) {
+      return this.dataPoints.filter(
+        (dp) =>
+          dp.label === label &&
+          dp.benchRun.headCommit.timestamp >= start &&
+          dp.benchRun.headCommit.timestamp <= end,
+      )
+    },
   },
 })
