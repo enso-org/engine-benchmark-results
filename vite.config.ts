@@ -11,6 +11,7 @@ export default defineConfig({
   plugins: [vue(), vuetify({ autoImport: true }), fsServer()],
   define: {
     FS_URL: JSON.stringify(FS_URL),
+    DEFAULT_DAYS_TO_FETCH: 30,
   },
   server: {
     port: PORT,

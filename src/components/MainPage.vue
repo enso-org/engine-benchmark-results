@@ -25,7 +25,7 @@ import { subDays } from 'date-fns'
 const branches = ['develop', 'wip/akirathan/1234-some-issue']
 const minDate = new Date('2022-12-01')
 const maxDate = new Date()
-const startDate = ref(subDays(maxDate, 30))
+const startDate = ref(subDays(maxDate, DEFAULT_DAYS_TO_FETCH))
 const endDate = ref(maxDate)
 console.log('startDate', startDate.value)
 console.log('endDate', endDate.value)
