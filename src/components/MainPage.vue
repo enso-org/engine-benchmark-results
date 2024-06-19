@@ -73,11 +73,23 @@ async function loadIndex(): Promise<Index> {
 async function loadData(index: Index, startDate: Date, endDate: Date): Promise<void> {
   const fnames = index.getFilenamesFromDate(startDate, endDate)
   console.log('Fetching ', fnames.length, ' files')
+  const fetchAndLoadPromises: Array<Promise<void>> = new Array()
   for (const fname of fnames) {
-    const resp = await fetch(FS_URL + '/' + fname)
-    const content = await resp.text()
-    processSingleFile(content)
+    if (!isFileLoaded(fname)) {
+      fetchAndLoadPromises.push(
+        fetchAndProcessFile(fname)
+      )
+    }
   }
+  await Promise.all(fetchAndLoadPromises)
+}
+
+async function fetchAndProcessFile(filename: string): Promise<void> {
+  console.log('Fetching file: ', filename)
+  const resp = await fetch(FS_URL + '/' + filename)
+  const content = await resp.text()
+  processSingleFile(content)
+  console.log('Processed file: ', filename)
 }
 
 function getFirstLabel(): string {
