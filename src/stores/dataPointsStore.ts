@@ -41,6 +41,6 @@ export const useDataPointStore = defineStore('dataPoint', {
 
     containsDatapoint(dataPoint: BenchDataPoint): boolean {
       return this.dataPoints.includes(dataPoint)
-    }
+    },
   },
 })

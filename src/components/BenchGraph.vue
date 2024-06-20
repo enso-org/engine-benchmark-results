@@ -127,7 +127,7 @@ const chartOpts: ChartOptions<'line'> = {
     x: {
       type: 'time',
       min: props.startDate.toISOString(),
-      max: props.endDate.toISOString()
+      max: props.endDate.toISOString(),
     },
   },
   elements: {
@@ -137,7 +137,6 @@ const chartOpts: ChartOptions<'line'> = {
   },
 }
 </script>
-
 
 <template>
   <v-card :variant="'outlined'" class="bench-graph">

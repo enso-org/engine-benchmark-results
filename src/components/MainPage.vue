@@ -8,19 +8,13 @@
       :branches="branches"
       @update-bench-data="updateBenchData($event.since, $event.until, $event.branches)"
     />
-    <LoadingSpinner
-      v-if="isLoading"
-    />
-    <div 
-      v-if="!isLoading"
-      v-for="label in benchDatas.keys()"
-      :key="label"
-    >
+    <LoadingSpinner v-if="isLoading" />
+    <div v-for="label in benchDatas.keys()" v-if="!isLoading" :key="label">
       <BenchGraph
         :label="label"
         :benchData="benchDatas.get(label) ?? new Map()"
-        :start-date="startDate"
-        :end-date="endDate"
+        :startDate="startDate"
+        :endDate="endDate"
       />
     </div>
   </v-container>
@@ -101,9 +95,7 @@ async function loadData(startDate: Date, endDate: Date): Promise<void> {
   const fetchAndLoadPromises: Array<Promise<void>> = new Array()
   for (const fname of fnames) {
     if (!isFileLoaded(fname)) {
-      fetchAndLoadPromises.push(
-        fetchAndProcessFile(fname)
-      )
+      fetchAndLoadPromises.push(fetchAndProcessFile(fname))
     }
   }
   await Promise.all(fetchAndLoadPromises)
@@ -119,10 +111,7 @@ async function fetchAndProcessFile(filename: string): Promise<void> {
 
 function isFileLoaded(filename: string): boolean {
   // file names correspond to bench run Ids.
-  const benchRunId = filename.substring(
-    'cache/'.length,
-    filename.length - '.json'.length
-  )
+  const benchRunId = filename.substring('cache/'.length, filename.length - '.json'.length)
   const benchRun = benchRunStore.findBenchRunById(benchRunId)
   return benchRun !== null
 }

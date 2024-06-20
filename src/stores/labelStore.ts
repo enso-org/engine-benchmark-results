@@ -16,6 +16,6 @@ export const useLabelStore = defineStore('label', {
 
     containsLabel(label: string): boolean {
       return this.labels.has(label)
-    }
+    },
   },
 })

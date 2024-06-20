@@ -12,7 +12,7 @@ export default defineConfig({
   define: {
     FS_URL: JSON.stringify(FS_URL),
     DEFAULT_DAYS_TO_FETCH: 30,
-    MAX_LABELS: 10
+    MAX_LABELS: 10,
   },
   server: {
     port: PORT,
