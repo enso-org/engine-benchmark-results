@@ -100,10 +100,11 @@ function onClick(event: ChartEvent, elements: ActiveElement[], chart: Chart) {
   // BenchData for the clicked element
   let benchData = props.benchData.get(branch)?.at(index) as BenchData
   console.assert(benchData !== undefined)
-  let commitMsg = benchData.benchRun.displayTitle
+  const commitMsg = benchData.benchRun.headCommit.message
+  const commitMsgHeader = commitMsg.split('\n')[0]
   scoreSel.value = score
   commitDateSel.value = benchData.timestamp.toString()
-  commitMsgSel.value = commitMsg
+  commitMsgSel.value = commitMsgHeader
   if (index > 0) {
     // Look at the previous score
     let prevScore = props.benchData.get(branch)?.at(index - 1)?.score as number
