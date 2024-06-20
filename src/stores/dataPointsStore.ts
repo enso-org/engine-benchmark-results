@@ -8,6 +8,7 @@ export const useDataPointStore = defineStore('dataPoint', {
 
   actions: {
     addDataPoint(dataPoint: BenchDataPoint) {
+      console.assert(!this.containsDatapoint(dataPoint))
       this.dataPoints.push(dataPoint)
     },
 
@@ -37,5 +38,9 @@ export const useDataPointStore = defineStore('dataPoint', {
         return true
       })
     },
+
+    containsDatapoint(dataPoint: BenchDataPoint): boolean {
+      return this.dataPoints.includes(dataPoint)
+    }
   },
 })
