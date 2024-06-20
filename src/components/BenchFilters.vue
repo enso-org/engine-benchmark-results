@@ -1,7 +1,15 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-const emit = defineEmits<{}>()
+const emit = defineEmits<{
+  updateBenchData: [
+    {
+      since: Date
+      until: Date
+      branches: string[]
+    },
+  ]
+}>()
 
 /**
  * minDate: The minimum date that can be selected.
@@ -27,6 +35,11 @@ function updateBenchData() {
   console.log('Since:', since.value)
   console.log('Until:', until.value)
   console.log('Selected branches:', selectedBranches.value)
+  emit('updateBenchData', {
+    since: since.value,
+    until: until.value,
+    branches: selectedBranches.value,
+  })
 }
 </script>
 

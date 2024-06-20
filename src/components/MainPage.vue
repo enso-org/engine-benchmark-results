@@ -6,9 +6,22 @@
       :since="startDate"
       :until="endDate"
       :branches="branches"
+      @update-bench-data="updateBenchData($event.since, $event.until, $event.branches)"
     />
-    <div v-for="label in benchDatas.keys()" :key="label">
-      <BenchGraph :label="label" :benchData="benchDatas.get(label) ?? new Map()" />
+    <LoadingSpinner
+      v-if="isLoading"
+    />
+    <div 
+      v-if="!isLoading"
+      v-for="label in benchDatas.keys()"
+      :key="label"
+    >
+      <BenchGraph
+        :label="label"
+        :benchData="benchDatas.get(label) ?? new Map()"
+        :start-date="startDate"
+        :end-date="endDate"
+      />
     </div>
   </v-container>
 </template>
@@ -18,17 +31,21 @@ import { Ref, ref } from 'vue'
 import { BenchDataPoint, Index } from '../utils/data'
 import { processSingleFile } from '../utils/data'
 import { type BenchData } from './BenchGraph.vue'
+import LoadingSpinner from './LoadingSpinner.vue'
 import BenchFilters from './BenchFilters.vue'
 import BenchGraph from './BenchGraph.vue'
 import { useDataPointStore } from '../stores/dataPointsStore'
 import { useLabelStore } from '../stores/labelStore'
 import { subDays } from 'date-fns'
+import { useBenchRunStore } from '../stores/benchRunStore'
 
-const branches = ['develop', 'wip/akirathan/1234-some-issue']
+const branches = ref(['develop'])
 const minDate = new Date('2022-12-01')
 const maxDate = new Date()
 const startDate = ref(subDays(maxDate, DEFAULT_DAYS_TO_FETCH))
 const endDate = ref(maxDate)
+// TODO: Progress?
+const isLoading = ref(true)
 
 const labelStore = useLabelStore()
 const datapointStore = useDataPointStore()
@@ -40,7 +57,12 @@ await loadData(startDate.value, endDate.value)
 
 // label -> branch -> BenchData[]
 const benchDatas: Ref<Map<string, Map<string, BenchData[]>>> = ref(new Map())
+let labelCnt = 0
 for (const label of labelStore.getAllLabels()) {
+  if (labelCnt >= MAX_LABELS) {
+    console.log('Maximum number of labels reached')
+    break
+  }
   const labelBenchDatas = new Map()
   for (const branch of branches.value) {
     const dp = datapointStore.findDatapoints({
@@ -53,7 +75,10 @@ for (const label of labelStore.getAllLabels()) {
     labelBenchDatas.set(branch, benchData)
   }
   benchDatas.value.set(label, labelBenchDatas)
+  labelCnt++
 }
+
+isLoading.value = false
 
 /**
  * Fetches the index file.
@@ -70,7 +95,7 @@ async function loadIndex(): Promise<Index> {
  * Load all the data for the given index and date range. The data is loaded from
  * files stored in server's cache directory.
  */
-async function loadData(index: Index, startDate: Date, endDate: Date): Promise<void> {
+async function loadData(startDate: Date, endDate: Date): Promise<void> {
   const fnames = index.getFilenamesFromDate(startDate, endDate)
   console.log('Fetching ', fnames.length, ' files')
   const fetchAndLoadPromises: Array<Promise<void>> = new Array()
@@ -92,31 +117,53 @@ async function fetchAndProcessFile(filename: string): Promise<void> {
   console.log('Processed file: ', filename)
 }
 
-function getFirstLabel(): string {
-  const firstLabel = labelStore.getAllLabels().values().next().value
-  return firstLabel
+function isFileLoaded(filename: string): boolean {
+  // file names correspond to bench run Ids.
+  const benchRunId = filename.substring(
+    'cache/'.length,
+    filename.length - '.json'.length
+  )
+  const benchRun = benchRunStore.findBenchRunById(benchRunId)
+  return benchRun !== null
 }
 
-function getDatapointsForLabel(label: string): BenchDataPoint[] {
-  const datapoints = datapointStore.findDataPointsByLabel(label, startDate.value, endDate.value)
-  return datapoints
-}
-
-const index = await loadIndex()
-await loadData(index, startDate.value, endDate.value)
-
-// Default data for the develop branch
-const devBenchData: BenchData[] = new Array()
-const label = getFirstLabel()
-console.log('First label', label)
-const devBenchDatapoints = getDatapointsForLabel(label)
-for (const dp of devBenchDatapoints) {
-  const benchData = {
-    score: dp.score,
-    timestamp: dp.benchRun.headCommit.timestamp,
-    benchRun: dp.benchRun,
+/**
+ * This function is called when BenchFilters emits the update-bench-data event.
+ */
+async function updateBenchData(startDate: Date, endDate: Date, branches: string[]) {
+  console.log('MainPage: updateBenchData: ', startDate, endDate, branches)
+  isLoading.value = true
+  await loadData(startDate, endDate)
+  for (const branch of branches) {
+    for (const label of benchDatas.value.keys()) {
+      const dp = datapointStore.findDatapoints({
+        startDate: startDate,
+        endDate: endDate,
+        branch: branch,
+        label: label,
+      })
+      const dpProps = transformDatapointProps(dp)
+      console.assert(benchDatas.value.has(label))
+      benchDatas.value.get(label)?.set(branch, dpProps)
+    }
   }
-  devBenchData.push(benchData)
+  isLoading.value = false
+}
+
+/**
+ * Transform bench data into the format required by BenchGraph component..
+ */
+function transformDatapointProps(datapoints: BenchDataPoint[]): BenchData[] {
+  const ret: BenchData[] = new Array()
+  for (const dp of datapoints) {
+    const benchData = {
+      score: dp.score,
+      timestamp: dp.benchRun.headCommit.timestamp,
+      benchRun: dp.benchRun,
+    }
+    ret.push(benchData)
+  }
+  return ret
 }
 </script>
 
