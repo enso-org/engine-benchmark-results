@@ -130,15 +130,17 @@ function isFileLoaded(filename: string): boolean {
 /**
  * This function is called when BenchFilters emits the update-bench-data event.
  */
-async function updateBenchData(startDate: Date, endDate: Date, branches: string[]) {
-  console.log('MainPage: updateBenchData: ', startDate, endDate, branches)
+async function updateBenchData(newStartDate: Date, newEndDate: Date, branches: string[]) {
+  console.log('MainPage: updateBenchData: ', newStartDate, newEndDate, branches)
   isLoading.value = true
-  await loadData(startDate, endDate)
+  startDate.value = newStartDate
+  endDate.value = newEndDate
+  await loadData(newStartDate, newEndDate)
   for (const branch of branches) {
     for (const label of benchDatas.value.keys()) {
       const dp = datapointStore.findDatapoints({
-        startDate: startDate,
-        endDate: endDate,
+        startDate: newStartDate,
+        endDate: newEndDate,
         branch: branch,
         label: label,
       })

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineProps, ref } from 'vue'
+import { defineProps, ref, computed } from 'vue'
 import { Line } from 'vue-chartjs'
 import 'chartjs-adapter-date-fns'
 import {
@@ -17,7 +17,7 @@ import {
   ChartOptions,
   TimeScale,
 } from 'chart.js'
-import type { BenchDataPoint, BenchRun } from '../utils/data'
+import type { BenchRun } from '../utils/data'
 import BenchElemSelection from './BenchElemSelection.vue'
 
 export interface BenchData {
@@ -29,6 +29,10 @@ export interface BenchData {
 const props = defineProps<{
   // Name (label) of the benchmark
   label: string
+  // Start of the data - the minimum limit of the x axis
+  startDate: Date
+  // End of the data - the maximal limit of the x axis
+  endDate: Date
   // Maps branches to their data
   benchData: Map<string, BenchData[]>
 }>()
@@ -54,25 +58,27 @@ const scoreDiffSel = ref<number | null>(null)
 const scoreDiffPercSel = ref<number | null>(null)
 
 // Map over entries of the props.benchData
-const datasets = Array.from(props.benchData.entries()).map(([branch, benchData]) => {
-  const scores = benchData.map((bd) => bd.score)
-  const timestamps = benchData.map((bd) => bd.timestamp)
-  // Zip scores and timestamps into an array
-  console.assert(scores.length === timestamps.length)
-  let data = new Array()
-  for (let i = 0; i < scores.length; i++) {
-    console.assert(scores[i] !== undefined)
-    console.assert(timestamps[i] !== undefined)
-    data.push({ x: timestamps[i], y: scores[i] })
-  }
-  const ret = {
-    label: branch,
-    data: data,
-    fill: false,
-    pointRadius: 3,
-  }
-  console.log(`Created dataset for branch ${branch} with data:`, ret)
-  return ret
+const datasets = computed(() => {
+  return Array.from(props.benchData.entries()).map(([branch, benchData]) => {
+    const scores = benchData.map((bd) => bd.score)
+    const timestamps = benchData.map((bd) => bd.timestamp)
+    // Zip scores and timestamps into an array
+    console.assert(scores.length === timestamps.length)
+    let data = new Array()
+    for (let i = 0; i < scores.length; i++) {
+      console.assert(scores[i] !== undefined)
+      console.assert(timestamps[i] !== undefined)
+      data.push({ x: timestamps[i], y: scores[i] })
+    }
+    const ret = {
+      label: branch,
+      data: data,
+      fill: false,
+      pointRadius: 3,
+    }
+    console.log(`BenchGraph[${props.label}]: Created dataset for branch ${branch} with data:`, ret)
+    return ret
+  })
 })
 
 function onClick(event: ChartEvent, elements: ActiveElement[], chart: Chart) {
@@ -89,7 +95,7 @@ function onClick(event: ChartEvent, elements: ActiveElement[], chart: Chart) {
   const timestamp = data.x as Date
 
   console.log(
-    `Clicked on label(branch) ${branch} at ${timestamp} with score ${score}, index: ${index}`,
+    `BenchGraph[${props.label}]: Clicked on label(branch) ${branch} at ${timestamp} with score ${score}, index: ${index}`,
   )
   // BenchData for the clicked element
   let benchData = props.benchData.get(branch)?.at(index) as BenchData
@@ -112,13 +118,15 @@ function onClick(event: ChartEvent, elements: ActiveElement[], chart: Chart) {
 }
 
 const chartData = {
-  datasets: datasets,
+  datasets: datasets.value,
 }
 const chartOpts: ChartOptions<'line'> = {
   onClick: onClick,
   scales: {
     x: {
       type: 'time',
+      min: props.startDate.toISOString(),
+      max: props.endDate.toISOString()
     },
   },
   elements: {
@@ -128,6 +136,7 @@ const chartOpts: ChartOptions<'line'> = {
   },
 }
 </script>
+
 
 <template>
   <v-card :variant="'outlined'" class="bench-graph">
