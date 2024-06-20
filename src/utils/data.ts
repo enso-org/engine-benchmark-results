@@ -53,7 +53,9 @@ export function processSingleFile(content: string): void {
     url: commitUrl,
     timestamp: commitTimestamp,
   }
-  commitStore.addCommit(commit)
+  if (commitStore.findCommitByID(commitId) === null) {
+    commitStore.addCommit(commit)
+  }
   const benchRunModel: BenchRun = {
     id: benchRunId,
     htmlUrl: htmlUrl,
@@ -63,17 +65,23 @@ export function processSingleFile(content: string): void {
     headCommit: commit,
     branch: 'develop',
   }
-  benchRunStore.addBenchRun(benchRunModel)
+  if (benchRunStore.findBenchRunById(benchRunId) === null) {
+    benchRunStore.addBenchRun(benchRunModel)
+  }
   const scoreDict = jsObj['label_score_dict']
   for (const [label, score] of Object.entries(scoreDict)) {
-    labelStore.addLabel(label)
+    if (!labelStore.containsLabel(label)) {
+      labelStore.addLabel(label)
+    }
     const scoreNum = Number.parseFloat(score as string)
     const dataPoint: BenchDataPoint = {
       label: label,
       score: scoreNum,
       benchRun: benchRunModel,
     }
-    dataPointStore.addDataPoint(dataPoint)
+    if (!dataPointStore.containsDatapoint(dataPoint)) {
+      dataPointStore.addDataPoint(dataPoint)
+    }
   }
 }
 
