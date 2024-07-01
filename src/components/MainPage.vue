@@ -35,7 +35,7 @@ import { useBenchRunStore } from '../stores/benchRunStore'
 
 const branches = ref(['develop'])
 const minDate = new Date('2022-12-01')
-const maxDate = new Date()
+const maxDate = new Date('2024-06-01')
 const startDate = ref(subDays(maxDate, DEFAULT_DAYS_TO_FETCH))
 const endDate = ref(maxDate)
 // TODO: Progress?
