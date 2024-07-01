@@ -150,6 +150,7 @@ const chartOpts: ChartOptions<'line'> = {
             <Line :data="chartData" :options="chartOpts" />
           </v-col>
         </v-row>
+        <v-spacer class="space"/>
         <v-row>
           <BenchElemSelection
             :score="scoreSel"
@@ -174,5 +175,9 @@ const chartOpts: ChartOptions<'line'> = {
   text-align: center;
   font-size: 20px;
   font-weight: bold;
+}
+
+.space {
+  min-height: 20px;
 }
 </style>
