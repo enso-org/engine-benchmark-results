@@ -50,6 +50,17 @@ ChartJS.register(
   TimeScale,
 )
 
+interface SelectedElement {
+  // y axis
+  score: number
+  // x axis
+  date: Date
+  // Index inside the dataset
+  idxInDataset: number
+  // Dataset label
+  branch: string
+}
+
 // Reactive values for the selected datapoint
 const scoreSel = ref<number | null>(null)
 const commitDateSel = ref<string | null>(null)
@@ -58,7 +69,11 @@ const scoreDiffSel = ref<number | null>(null)
 const scoreDiffPercSel = ref<number | null>(null)
 const benchRunURLSel = ref<string | null>(null)
 
+const selectedElement = ref<SelectedElement | null>(null)
+const isElementSelected = computed(() => selectedElement.value !== null)
+
 // Map over entries of the props.benchData
+// These are real datasets for all the branches
 const datasets = computed(() => {
   return Array.from(props.benchData.entries()).map(([branch, benchData]) => {
     const scores = benchData.map((bd) => bd.score)
@@ -82,6 +97,30 @@ const datasets = computed(() => {
   })
 })
 
+const selectedDataset = computed(() => {
+  if (isElementSelected.value) {
+    return [{
+      label: 'selected',
+      data: [{
+        x: selectedElement.value?.date,
+        y: selectedElement.value?.score,
+      }],
+      pointStyle: 'circle',
+      pointRadius: 7,
+      pointBackgroundColor: 'blue',
+    }]
+  } else {
+    return []
+  }
+})
+
+const chartData = computed(() => {
+  const allDatasets = (datasets.value as any[]).concat(selectedDataset.value)
+  return {
+    datasets: allDatasets
+  }
+})
+
 function onClick(event: ChartEvent, elements: ActiveElement[], chart: Chart) {
   if (elements.length === 0 || event.type !== 'click') {
     return
@@ -94,6 +133,12 @@ function onClick(event: ChartEvent, elements: ActiveElement[], chart: Chart) {
   const branch = dataset.label as string
   const score = data.y as number
   const timestamp = data.x as Date
+  selectedElement.value = {
+    score: score,
+    date: timestamp,
+    idxInDataset: index,
+    branch: branch,
+  }
 
   console.log(
     `BenchGraph[${props.label}]: Clicked on label(branch) ${branch} at ${timestamp} with score ${score}, index: ${index}`,
@@ -120,9 +165,6 @@ function onClick(event: ChartEvent, elements: ActiveElement[], chart: Chart) {
   }
 }
 
-const chartData = {
-  datasets: datasets.value,
-}
 const chartOpts: ChartOptions<'line'> = {
   onClick: onClick,
   scales: {
