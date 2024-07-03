@@ -28,6 +28,16 @@ const scoreDiffMsg = computed(() => {
   }
 })
 const benchRunURL = computed(() => (props.benchRunURL ? props.benchRunURL : undefinedMsg))
+const isSomeElementSelected = computed(() => {
+  return (
+    props.score !== null &&
+    props.scoreDiff !== null &&
+    props.scoreDiffPerc !== null &&
+    props.commitDate !== null &&
+    props.commitMessage !== null &&
+    props.benchRunURL !== null
+  )
+})
 </script>
 
 <template>
@@ -51,7 +61,10 @@ const benchRunURL = computed(() => (props.benchRunURL ? props.benchRunURL : unde
     <v-row>
       <v-col>Bench run URL</v-col>
       <v-col>
-        <a :href=benchRunURL target="_blank">{{ benchRunURL }}</a>
+        <div v-if="isSomeElementSelected">
+          <a :href=benchRunURL target="_blank">{{ benchRunURL }}</a>
+        </div>
+        <div v-else>{{ undefinedMsg }}</div>
       </v-col>
     </v-row>
   </v-container>
