@@ -7,6 +7,7 @@ const props = defineProps<{
   scoreDiffPerc: number | null
   commitDate: string | null
   commitMessage: string | null
+  benchRunURL: string | null
 }>()
 
 const undefinedMsg = 'No selection'
@@ -26,6 +27,7 @@ const scoreDiffMsg = computed(() => {
     return 'NA'
   }
 })
+const benchRunURL = computed(() => (props.benchRunURL ? props.benchRunURL : undefinedMsg))
 </script>
 
 <template>
@@ -45,6 +47,12 @@ const scoreDiffMsg = computed(() => {
     <v-row>
       <v-col>Commit message:</v-col>
       <v-col>{{ commitMessageMsg }}</v-col>
+    </v-row>
+    <v-row>
+      <v-col>Bench run URL</v-col>
+      <v-col>
+        <a :href=benchRunURL target="_blank">{{ benchRunURL }}</a>
+      </v-col>
     </v-row>
   </v-container>
 </template>

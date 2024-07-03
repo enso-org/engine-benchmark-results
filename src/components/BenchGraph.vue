@@ -56,6 +56,7 @@ const commitDateSel = ref<string | null>(null)
 const commitMsgSel = ref<string | null>(null)
 const scoreDiffSel = ref<number | null>(null)
 const scoreDiffPercSel = ref<number | null>(null)
+const benchRunURLSel = ref<string | null>(null)
 
 // Map over entries of the props.benchData
 const datasets = computed(() => {
@@ -105,6 +106,7 @@ function onClick(event: ChartEvent, elements: ActiveElement[], chart: Chart) {
   scoreSel.value = score
   commitDateSel.value = benchData.timestamp.toString()
   commitMsgSel.value = commitMsgHeader
+  benchRunURLSel.value = benchData.benchRun.htmlUrl
   if (index > 0) {
     // Look at the previous score
     let prevScore = props.benchData.get(branch)?.at(index - 1)?.score as number
@@ -158,6 +160,7 @@ const chartOpts: ChartOptions<'line'> = {
             :scoreDiffPerc="scoreDiffPercSel"
             :commitDate="commitDateSel"
             :commitMessage="commitMsgSel"
+            :benchRunURL="benchRunURLSel"
           />
         </v-row>
       </v-container>
