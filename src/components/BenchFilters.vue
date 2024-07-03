@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
 const emit = defineEmits<{
   updateBenchData: [
@@ -7,6 +7,7 @@ const emit = defineEmits<{
       since: Date
       until: Date
       branches: string[]
+      labels: string[]
     },
   ]
 }>()
@@ -17,6 +18,7 @@ const emit = defineEmits<{
  * since: The currently selected start date.
  * until: The currently selected end date.
  * branches: The list of all branches that can be selected.
+ * labels: The list of all labels that can be selected.
  */
 const props = defineProps<{
   minDate: Date
@@ -24,11 +26,20 @@ const props = defineProps<{
   since: Date
   until: Date
   branches: string[]
+  labels: string[]
 }>()
 
 const selectedBranches = ref<string[]>(['develop'])
 const since = ref(props.since)
 const until = ref(props.until)
+const selectedClasses = ref<string[]>([])
+const selectedLabels = computed(() => {
+  const labels = new Array<string>()
+  for (const classFullName of selectedClasses.value) {
+    labels.push(...labelsByClasses.get(classFullName) ?? [])
+  }
+  return labels
+})
 
 function updateBenchData() {
   console.log('Updating bench data')
@@ -39,8 +50,29 @@ function updateBenchData() {
     since: since.value,
     until: until.value,
     branches: selectedBranches.value,
+    labels: selectedLabels.value,
   })
 }
+
+// Distill class names from labels
+function className(label: string): string {
+  const items = label.split('.')
+  const n = items.length
+  console.assert(n >= 2, 'Incorrect label format: ' + label)
+  const classFullName = items.slice(0, n - 1).join('.')
+  return classFullName
+}
+
+const labelsByClasses = new Map<string, string[]>()
+for (const label of props.labels) {
+  const classFullName = className(label)
+  if (!labelsByClasses.has(classFullName)) {
+    labelsByClasses.set(classFullName, [])
+  }
+  labelsByClasses.get(classFullName)?.push(label)
+}
+const classes = Array.from(labelsByClasses.keys())
+
 </script>
 
 <template>
@@ -84,6 +116,17 @@ function updateBenchData() {
           v-model="selectedBranches"
           label="Branches"
           :items="props.branches"
+          multiple
+        ></v-autocomplete>
+      </v-col>
+    </v-row>
+    <!-- Classes -->
+    <v-row>
+      <v-col>
+        <v-autocomplete
+          v-model="selectedClasses"
+          label="Classes"
+          :items="classes"
           multiple
         ></v-autocomplete>
       </v-col>

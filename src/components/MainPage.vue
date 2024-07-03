@@ -6,10 +6,11 @@
       :since="startDate"
       :until="endDate"
       :branches="branches"
-      @update-bench-data="updateBenchData($event.since, $event.until, $event.branches)"
+      :labels="initialLabels"
+      @update-bench-data="updateBenchData($event.since, $event.until, $event.branches, $event.labels)"
     />
     <LoadingSpinner v-if="isLoading" />
-    <div v-for="label in benchDatas.keys()" v-if="!isLoading" :key="label">
+    <div v-for="label in labelsToDisplay" v-if="!isLoading" :key="label">
       <BenchGraph
         :label="label"
         :benchData="benchDatas.get(label) ?? new Map()"
@@ -52,6 +53,8 @@ await loadData(startDate.value, endDate.value)
 // label -> branch -> BenchData[]
 const benchDatas: Ref<Map<string, Map<string, BenchData[]>>> = ref(new Map())
 let labelCnt = 0
+// Array of displayed labels
+const initialLabels = new Array<string>()
 for (const label of labelStore.getAllLabels()) {
   if (labelCnt >= MAX_LABELS) {
     console.log('Maximum number of labels reached')
@@ -70,7 +73,10 @@ for (const label of labelStore.getAllLabels()) {
   }
   benchDatas.value.set(label, labelBenchDatas)
   labelCnt++
+  initialLabels.push(label)
 }
+
+const labelsToDisplay = ref<string[]>(initialLabels)
 
 isLoading.value = false
 
@@ -119,11 +125,16 @@ function isFileLoaded(filename: string): boolean {
 /**
  * This function is called when BenchFilters emits the update-bench-data event.
  */
-async function updateBenchData(newStartDate: Date, newEndDate: Date, branches: string[]) {
+async function updateBenchData(newStartDate: Date, newEndDate: Date, branches: string[], labels: string[]) {
   console.log('MainPage: updateBenchData: ', newStartDate, newEndDate, branches)
   isLoading.value = true
   startDate.value = newStartDate
   endDate.value = newEndDate
+  if (labels.length === 0) {
+    labelsToDisplay.value = initialLabels
+  } else {
+    labelsToDisplay.value = labels
+  }
   await loadData(newStartDate, newEndDate)
   for (const branch of branches) {
     for (const label of benchDatas.value.keys()) {
