@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
+import { useLabelStore } from '../stores/labelStore';
 
 const emit = defineEmits<{
   updateBenchData: [
@@ -26,20 +27,42 @@ const props = defineProps<{
   since: Date
   until: Date
   branches: string[]
-  labels: string[]
 }>()
 
 const selectedBranches = ref<string[]>(['develop'])
 const since = ref(props.since)
 const until = ref(props.until)
 const selectedClasses = ref<string[]>([])
-const selectedLabels = computed(() => {
+const selectedLabels = ref<string[]>([])
+
+// Check if some class was removed and remove all labels from it
+watch(selectedClasses, (newSelectedClasses, oldSelectedClasses) => {
+  if (oldSelectedClasses.length > newSelectedClasses.length) {
+    selectedLabels.value = selectedLabels.value.filter(label => {
+      for (const klazz of newSelectedClasses) {
+        if (label.startsWith(klazz)) {
+          return true
+        }
+      }
+      return false
+    })
+  }
+
+})
+
+const labelStore = useLabelStore()
+const allClasses = Array.from(labelStore.getAllClassNames())
+const labelsToSuggest = computed(() => {
+  if (selectedClasses.value.length === 0) {
+    return []
+  }
   const labels = new Array<string>()
-  for (const classFullName of selectedClasses.value) {
-    labels.push(...labelsByClasses.get(classFullName) ?? [])
+  for (const klazzName of selectedClasses.value) {
+    labels.push(...labelStore.getLabelsForClass(klazzName))
   }
   return labels
 })
+
 
 function updateBenchData() {
   console.log('Updating bench data')
@@ -54,24 +77,6 @@ function updateBenchData() {
   })
 }
 
-// Distill class names from labels
-function className(label: string): string {
-  const items = label.split('.')
-  const n = items.length
-  console.assert(n >= 2, 'Incorrect label format: ' + label)
-  const classFullName = items.slice(0, n - 1).join('.')
-  return classFullName
-}
-
-const labelsByClasses = new Map<string, string[]>()
-for (const label of props.labels) {
-  const classFullName = className(label)
-  if (!labelsByClasses.has(classFullName)) {
-    labelsByClasses.set(classFullName, [])
-  }
-  labelsByClasses.get(classFullName)?.push(label)
-}
-const classes = Array.from(labelsByClasses.keys())
 
 </script>
 
@@ -126,7 +131,18 @@ const classes = Array.from(labelsByClasses.keys())
         <v-autocomplete
           v-model="selectedClasses"
           label="Classes"
-          :items="classes"
+          :items="allClasses"
+          multiple
+        ></v-autocomplete>
+      </v-col>
+    </v-row>
+    <!-- Benchmarks (depends on which classes are selected) -->
+    <v-row>
+      <v-col>
+        <v-autocomplete
+          v-model="selectedLabels"
+          label="Benchmarks (labels)"
+          :items="labelsToSuggest"
           multiple
         ></v-autocomplete>
       </v-col>
@@ -135,7 +151,7 @@ const classes = Array.from(labelsByClasses.keys())
     <v-row>
       <v-col>
         <v-btn size="x-large" :location="'center'" :color="'primary'" @click="updateBenchData"
-          >Filter</v-btn
+          >Search</v-btn
         >
       </v-col>
     </v-row>

@@ -27,7 +27,7 @@ export interface BenchDataPoint {
   benchRun: BenchRun
 }
 
-export function processSingleFile(content: string): void {
+function processSingleFile(content: string): void {
   const commitStore = useCommitStore()
   const benchRunStore = useBenchRunStore()
   const dataPointStore = useDataPointStore()
@@ -84,6 +84,52 @@ export function processSingleFile(content: string): void {
     }
   }
 }
+
+/**
+ * Fetches the index file.
+ */
+export async function loadIndex(): Promise<Index> {
+  const indexResp = await fetch(`${FS_URL}/cache/index.json`)
+  const indexContent = await indexResp.json()
+  const index = Index.fromJson(indexContent)
+  console.log('Index loaded')
+  return index
+}
+
+/**
+ * Loads all the data in the given date range.
+ * @param index 
+ * @param startDate 
+ * @param endDate 
+ */
+export async function loadData(index: Index, startDate: Date, endDate: Date): Promise<void> {
+  const fnames = index.getFilenamesFromDate(startDate, endDate)
+  console.log('Fetching ', fnames.length, ' files')
+  const fetchAndLoadPromises: Array<Promise<void>> = new Array()
+  for (const fname of fnames) {
+    if (!isFileLoaded(fname)) {
+      fetchAndLoadPromises.push(fetchAndProcessFile(fname))
+    }
+  }
+  await Promise.all(fetchAndLoadPromises)
+}
+
+function isFileLoaded(filename: string): boolean {
+  const benchRunStore = useBenchRunStore()
+  // file names correspond to bench run Ids.
+  const benchRunId = filename.substring('cache/'.length, filename.length - '.json'.length)
+  const benchRun = benchRunStore.findBenchRunById(benchRunId)
+  return benchRun !== null
+}
+
+async function fetchAndProcessFile(filename: string): Promise<void> {
+  console.log('Fetching file: ', filename)
+  const resp = await fetch(FS_URL + '/' + filename)
+  const content = await resp.text()
+  processSingleFile(content)
+  console.log('Processed file: ', filename)
+}
+
 
 export class Index {
   private content: Map<string, Date> = new Map<string, Date>()
