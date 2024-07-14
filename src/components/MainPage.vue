@@ -21,7 +21,6 @@
 import { ref } from 'vue'
 import { loadData, loadIndex } from '../utils/data'
 import BenchSearch from './BenchSearch.vue'
-import { useLabelStore } from '../stores/labelStore'
 import { subDays } from 'date-fns'
 import BenchGraphs from './BenchGraphs.vue'
 
@@ -31,14 +30,11 @@ const maxDate = new Date('2024-06-01')
 const startDate = ref(subDays(maxDate, DEFAULT_DAYS_TO_FETCH))
 const endDate = ref(maxDate)
 
-const labelStore = useLabelStore()
-
 // Load initial data
 const index = await loadIndex()
 await loadData(index, startDate.value, endDate.value)
 
 const labelsToDisplay = ref<string[]>([])
-const allLabels = Array.from(labelStore.getAllLabels())
 
 async function updateBenchData(since: Date, until: Date, newBranches: string[], labels: string[]) {
   console.log('Updating bench data')
