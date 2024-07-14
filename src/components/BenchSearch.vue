@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue'
-import { useLabelStore } from '../stores/labelStore';
+import { useLabelStore } from '../stores/labelStore'
 
 const emit = defineEmits<{
   updateBenchData: [
@@ -38,7 +38,7 @@ const selectedLabels = ref<string[]>([])
 // Check if some class was removed and remove all labels from it
 watch(selectedClasses, (newSelectedClasses, oldSelectedClasses) => {
   if (oldSelectedClasses.length > newSelectedClasses.length) {
-    selectedLabels.value = selectedLabels.value.filter(label => {
+    selectedLabels.value = selectedLabels.value.filter((label) => {
       for (const klazz of newSelectedClasses) {
         if (label.startsWith(klazz)) {
           return true
@@ -47,7 +47,6 @@ watch(selectedClasses, (newSelectedClasses, oldSelectedClasses) => {
       return false
     })
   }
-
 })
 
 const labelStore = useLabelStore()
@@ -63,7 +62,6 @@ const labelsToSuggest = computed(() => {
   return labels
 })
 
-
 function updateBenchData() {
   console.log('Updating bench data')
   console.log('Since:', since.value)
@@ -76,8 +74,6 @@ function updateBenchData() {
     labels: selectedLabels.value,
   })
 }
-
-
 </script>
 
 <template>

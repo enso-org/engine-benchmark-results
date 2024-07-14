@@ -62,7 +62,7 @@ const isSomeElementSelected = computed(() => {
       <v-col>Bench run URL</v-col>
       <v-col>
         <div v-if="isSomeElementSelected">
-          <a :href=benchRunURL target="_blank">{{ benchRunURL }}</a>
+          <a :href="benchRunURL" target="_blank">{{ benchRunURL }}</a>
         </div>
         <div v-else>{{ undefinedMsg }}</div>
       </v-col>

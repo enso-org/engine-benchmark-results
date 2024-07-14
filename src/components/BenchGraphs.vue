@@ -1,11 +1,7 @@
 <template>
-  <v-container v-if="isEmpty">
-    No benchmarks to display
-  </v-container>
+  <v-container v-if="isEmpty"> No benchmarks to display </v-container>
   <v-container v-else>
-    <v-row>
-      Status: {{ loadedBenches.size }} loaded out of {{ labels.length }}
-    </v-row>
+    <v-row> Status: {{ loadedBenches.size }} loaded out of {{ labels.length }} </v-row>
     <v-row v-for="label in labels" :key="label">
       <div v-if="loadedBenches.get(label)">
         <BenchGraph
@@ -26,10 +22,10 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import BenchGraph from './BenchGraph.vue'
-import { BenchData } from './BenchGraph.vue';
+import { BenchData } from './BenchGraph.vue'
 import LoadingSpinner from './LoadingSpinner.vue'
-import { BenchDataPoint } from '../utils/data';
-import { useDataPointStore } from '../stores/dataPointsStore';
+import { BenchDataPoint } from '../utils/data'
+import { useDataPointStore } from '../stores/dataPointsStore'
 
 const props = defineProps<{
   // Names (labels) of all the benchmarks that should be displayed
@@ -42,7 +38,7 @@ const props = defineProps<{
 }>()
 
 const datapointStore = useDataPointStore()
-const isEmpty = computed(() => (props.labels.length === 0))
+const isEmpty = computed(() => props.labels.length === 0)
 
 // Start loading data for all benchmarks
 const allBenchData = computed(() => {
@@ -69,7 +65,7 @@ function loadDataForBenchmark(benchName: string): Map<string, BenchData[]> {
       startDate: props.startDate,
       endDate: props.endDate,
       branch: branch,
-      label: benchName
+      label: benchName,
     })
     const dpProps = transformDatapointProps(dp)
     benchData.set(branch, dpProps)
@@ -86,7 +82,7 @@ function transformDatapointProps(datapoints: BenchDataPoint[]): BenchData[] {
     const benchData = {
       score: dp.score,
       timestamp: dp.benchRun.headCommit.timestamp,
-      benchRun: dp.benchRun
+      benchRun: dp.benchRun,
     }
     ret.push(benchData)
   }
@@ -94,6 +90,4 @@ function transformDatapointProps(datapoints: BenchDataPoint[]): BenchData[] {
 }
 </script>
 
-<script lang="ts">
-
-</script>
+<script lang="ts"></script>

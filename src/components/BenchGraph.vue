@@ -99,16 +99,20 @@ const datasets = computed(() => {
 
 const selectedDataset = computed(() => {
   if (isElementSelected.value) {
-    return [{
-      label: 'selected',
-      data: [{
-        x: selectedElement.value?.date,
-        y: selectedElement.value?.score,
-      }],
-      pointStyle: 'circle',
-      pointRadius: 7,
-      pointBackgroundColor: 'blue',
-    }]
+    return [
+      {
+        label: 'selected',
+        data: [
+          {
+            x: selectedElement.value?.date,
+            y: selectedElement.value?.score,
+          },
+        ],
+        pointStyle: 'circle',
+        pointRadius: 7,
+        pointBackgroundColor: 'blue',
+      },
+    ]
   } else {
     return []
   }
@@ -117,7 +121,7 @@ const selectedDataset = computed(() => {
 const chartData = computed(() => {
   const allDatasets = (datasets.value as any[]).concat(selectedDataset.value)
   return {
-    datasets: allDatasets
+    datasets: allDatasets,
   }
 })
 
@@ -194,7 +198,7 @@ const chartOpts: ChartOptions<'line'> = {
             <Line :data="chartData" :options="chartOpts" />
           </v-col>
         </v-row>
-        <v-spacer class="space"/>
+        <v-spacer class="space" />
         <v-row>
           <BenchElemSelection
             :score="scoreSel"

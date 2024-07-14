@@ -6,7 +6,9 @@
       :since="startDate"
       :until="endDate"
       :branches="branches"
-      @update-bench-data="updateBenchData($event.since, $event.until, $event.branches, $event.labels)"
+      @update-bench-data="
+        updateBenchData($event.since, $event.until, $event.branches, $event.labels)
+      "
     />
     <BenchGraphs
       :labels="labelsToDisplay"
@@ -43,7 +45,6 @@ async function updateBenchData(since: Date, until: Date, newBranches: string[], 
   branches.value = newBranches
   labelsToDisplay.value = labels
 }
-
 </script>
 
 <style scoped></style>
