@@ -3,28 +3,33 @@
     No benchmarks to display
   </v-container>
   <v-container v-else>
-    Status: {{ howManyLoaded }} loaded out of {{ benchesToDisplay }}
-    <div v-for="label in labels" :key="label">
-      <div v-if="isBenchmarkLoaded(label)">
+    <v-row>
+      Status: {{ loadedBenches.size }} loaded out of {{ labels.length }}
+    </v-row>
+    <v-row v-for="label in labels" :key="label">
+      <div v-if="loadedBenches.get(label)">
         <BenchGraph
           :label="label"
           :startDate="startDate"
           :endDate="endDate"
-          :benchData="getDataForBenchmark(label)"
+          :benchData="allBenchData.get(label) ?? new Map()"
         />
       </div>
       <div v-else>
         <LoadingSpinner />
         Loading benchmark {{ label }}
       </div>
-    </div>
+    </v-row>
   </v-container>
 </template>
 
 <script setup lang="ts">
-import { Ref, ref, computed } from 'vue'
+import { computed } from 'vue'
 import BenchGraph from './BenchGraph.vue'
+import { BenchData } from './BenchGraph.vue';
 import LoadingSpinner from './LoadingSpinner.vue'
+import { BenchDataPoint } from '../utils/data';
+import { useDataPointStore } from '../stores/dataPointsStore';
 
 const props = defineProps<{
   // Names (labels) of all the benchmarks that should be displayed
@@ -36,25 +41,59 @@ const props = defineProps<{
   endDate: Date
 }>()
 
-function isBenchmarkLoaded(benchName: string): boolean {
-  return loadedBenches.value.get(benchName) || false
-}
-
-function getDataForBenchmark(benchName: string): BenchData {
-  console.assert(isBenchmarkLoaded(benchName))
-  throw new Error('Not implemented')
-}
-
-const benchesToDisplay = ref(props.labels.length)
-const howManyLoaded = ref(0)
-
-// Maps labels (bench names) to their loading state
-const loadedBenches: Ref<Map<string, boolean>> = ref(new Map())
-for (let label of props.labels) {
-  loadedBenches.value.set(label, false)
-}
-
+const datapointStore = useDataPointStore()
 const isEmpty = computed(() => (props.labels.length === 0))
 
+// Start loading data for all benchmarks
+const allBenchData = computed(() => {
+  const _allBenchData: Map<string, Map<string, BenchData[]>> = new Map()
+  for (let label of props.labels) {
+    const benchData = loadDataForBenchmark(label)
+    _allBenchData.set(label, benchData)
+  }
+  return _allBenchData
+})
+
+const loadedBenches = computed(() => {
+  const _loadedBenches: Map<string, boolean> = new Map()
+  for (const loadedLabel of allBenchData.value.keys()) {
+    _loadedBenches.set(loadedLabel, true)
+  }
+  return _loadedBenches
+})
+
+function loadDataForBenchmark(benchName: string): Map<string, BenchData[]> {
+  const benchData = new Map<string, BenchData[]>()
+  for (const branch of props.branches) {
+    const dp = datapointStore.findDatapoints({
+      startDate: props.startDate,
+      endDate: props.endDate,
+      branch: branch,
+      label: benchName
+    })
+    const dpProps = transformDatapointProps(dp)
+    benchData.set(branch, dpProps)
+  }
+  return benchData
+}
+
+/**
+ * Transform bench data into the format required by BenchGraph component
+ */
+function transformDatapointProps(datapoints: BenchDataPoint[]): BenchData[] {
+  const ret: BenchData[] = new Array()
+  for (const dp of datapoints) {
+    const benchData = {
+      score: dp.score,
+      timestamp: dp.benchRun.headCommit.timestamp,
+      benchRun: dp.benchRun
+    }
+    ret.push(benchData)
+  }
+  return ret
+}
+</script>
+
+<script lang="ts">
 
 </script>
