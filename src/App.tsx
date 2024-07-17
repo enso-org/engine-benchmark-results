@@ -7,7 +7,7 @@ function App() {
         Hello World
       </Button>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
