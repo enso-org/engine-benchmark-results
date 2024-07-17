@@ -1,5 +1,6 @@
 <template>
   <v-container>
+    <BenchmarksInfo :startDate="startDate" :endDate="endDate" />
     <BenchSearch
       :minDate="minDate"
       :maxDate="maxDate"
@@ -25,6 +26,7 @@ import { loadData, loadIndex } from '../utils/data'
 import BenchSearch from './BenchSearch.vue'
 import { subDays } from 'date-fns'
 import BenchGraphs from './BenchGraphs.vue'
+import BenchmarksInfo from './BenchmarksInfo.vue'
 
 const branches = ref(['develop'])
 const minDate = new Date('2022-12-01')

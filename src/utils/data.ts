@@ -98,9 +98,9 @@ export async function loadIndex(): Promise<Index> {
 
 /**
  * Loads all the data in the given date range.
- * @param index 
- * @param startDate 
- * @param endDate 
+ * @param index
+ * @param startDate
+ * @param endDate
  */
 export async function loadData(index: Index, startDate: Date, endDate: Date): Promise<void> {
   const fnames = index.getFilenamesFromDate(startDate, endDate)
@@ -129,7 +129,6 @@ async function fetchAndProcessFile(filename: string): Promise<void> {
   processSingleFile(content)
   console.log('Processed file: ', filename)
 }
-
 
 export class Index {
   private content: Map<string, Date> = new Map<string, Date>()
