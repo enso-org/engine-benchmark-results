@@ -24,6 +24,7 @@
     "serve-static": "^1.15.0",
     "vue": "^3.4.21",
     "vue-chartjs": "^5.3.1",
+    "vue-router": "^4.4.0",
     "vuetify": "^3.6.8"
   },
   "devDependencies": {
