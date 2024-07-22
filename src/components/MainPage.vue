@@ -40,7 +40,7 @@ await loadData(index, startDate.value, endDate.value)
 
 const labelsToDisplay = ref<string[]>([])
 
-async function updateBenchData(since: Date, until: Date, newBranches: string[], labels: string[]) {
+function updateBenchData(since: Date, until: Date, newBranches: string[], labels: string[]) {
   console.log('Updating bench data')
   startDate.value = since
   endDate.value = until
