@@ -133,7 +133,7 @@ function onClick(event: ChartEvent, elements: ActiveElement[], chart: Chart) {
   const datasetIndex = element.datasetIndex
   const index = element.index
   const dataset = chart.data.datasets[datasetIndex]
-  const data = dataset.data[index]
+  const data: any = dataset.data[index]
   const branch = dataset.label as string
   const score = data.y as number
   const timestamp = data.x as Date
@@ -216,8 +216,6 @@ const chartOpts: ChartOptions<'line'> = {
 
 <style scoped>
 .bench-graph {
-  margin-left: 5%;
-  margin-right: 5%;
 }
 
 .bench-title {
