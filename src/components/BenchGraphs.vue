@@ -2,8 +2,9 @@
   <v-container v-if="isEmpty"> No benchmarks to display </v-container>
   <v-container v-else>
     <v-row> Status: {{ loadedBenches.size }} loaded out of {{ labels.length }} </v-row>
-    <v-row v-for="label in labels" :key="label">
-      <v-col>
+    <v-row v-for="label in labels" :key="label" alignContent="center">
+      <v-spacer />
+      <v-col class="v-col-8">
         <BenchGraph v-if="loadedBenches.get(label)"
           :label="label"
           :startDate="startDate"
@@ -15,6 +16,7 @@
           Loading benchmark {{ label }}
         </div>
       </v-col>
+      <v-spacer />
     </v-row>
   </v-container>
 </template>
