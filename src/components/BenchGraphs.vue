@@ -3,18 +3,18 @@
   <v-container v-else>
     <v-row> Status: {{ loadedBenches.size }} loaded out of {{ labels.length }} </v-row>
     <v-row v-for="label in labels" :key="label">
-      <div v-if="loadedBenches.get(label)">
-        <BenchGraph
+      <v-col>
+        <BenchGraph v-if="loadedBenches.get(label)"
           :label="label"
           :startDate="startDate"
           :endDate="endDate"
           :benchData="allBenchData.get(label) ?? new Map()"
         />
-      </div>
-      <div v-else>
-        <LoadingSpinner />
-        Loading benchmark {{ label }}
-      </div>
+        <div v-else>
+          <LoadingSpinner />
+          Loading benchmark {{ label }}
+        </div>
+      </v-col>
     </v-row>
   </v-container>
 </template>
@@ -90,4 +90,3 @@ function transformDatapointProps(datapoints: BenchDataPoint[]): BenchData[] {
 }
 </script>
 
-<script lang="ts"></script>
