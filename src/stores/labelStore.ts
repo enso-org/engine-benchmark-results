@@ -44,8 +44,11 @@ export const useLabelStore = defineStore('label', {
      * Returns set of all the labels inside Engine benchmarks.
      */
     getAllEngineLabels(): Set<string> {
-      // Filter this.labels by `isEngineLabel` function
       return new Set([...this.labels].filter(isEngineLabel))
+    },
+
+    getAllStdlibLabels(): Set<string> {
+      return new Set([...this.labels].filter(isStdlibLabel))
     },
 
     containsLabel(label: string): boolean {

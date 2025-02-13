@@ -20,7 +20,6 @@ const emit = defineEmits<{
  * since: The currently selected start date.
  * until: The currently selected end date.
  * branches: The list of all branches that can be selected.
- * labels: List of labels that are already selected.
  */
 const props = defineProps<{
   minDate: Date
@@ -28,20 +27,13 @@ const props = defineProps<{
   since: Date
   until: Date
   branches: string[]
-  labels: string[]
 }>()
 
 const selectedBranches = ref<string[]>(['develop'])
 const since = ref(props.since)
 const until = ref(props.until)
-const selectedLabels = ref<string[]>(props.labels)
-const selectedClasses = ref<string[]>(classesFromLabels(props.labels))
-
-watch(props.labels, (newLabels) => {
-  console.log('props.labels changed')
-  selectedLabels.value = newLabels
-  selectedClasses.value = classesFromLabels(newLabels)
-})
+const selectedLabels = ref<string[]>([])
+const selectedClasses = ref<string[]>([])
 
 watch(selectedLabels, (newSelectedLabels, oldSelectedLabels) => {
   console.log('selectedLabels changed')
@@ -96,6 +88,29 @@ function classesFromLabels(labels: Array<string>): Array<string> {
     classes.add(classNameForLabel(label))
   }
   return Array.from(classes)
+}
+
+/**
+ * Selects all classes and labels that are engine benchmarks.
+ */
+function selectAllEngineBenchmarks() {
+  const engineLabels = Array.from(labelStore.getAllEngineLabels())
+  const engineClasses = classesFromLabels(engineLabels)
+  selectedLabels.value = engineLabels
+  selectedClasses.value = engineClasses
+}
+
+function selectAllStandardLibrariesBenchmarks() {
+  const stdlibLabels = Array.from(labelStore.getAllStdlibLabels())
+  const stdlibClasses = classesFromLabels(stdlibLabels)
+  selectedLabels.value = stdlibLabels
+  selectedClasses.value = stdlibClasses
+}
+
+function clearSelection() {
+  selectedLabels.value = []
+  selectedClasses.value = []
+  selectedBranches.value = ['develop']
 }
 </script>
 
@@ -167,11 +182,39 @@ function classesFromLabels(labels: Array<string>): Array<string> {
       </v-col>
     </v-row>
 
+    <!-- Buttons for selecting Engine and Stdlib benchmarks -->
     <v-row>
       <v-col>
-        <v-btn size="x-large" :location="'center'" :color="'primary'" @click="updateBenchData"
-          >Search</v-btn
-        >
+        <v-btn :color="'secondary'" @click="selectAllEngineBenchmarks">
+          Select all Engine benchmarks
+        </v-btn>
+      </v-col>
+      <v-col>
+        <v-btn :color="'secondary'" @click="selectAllStandardLibrariesBenchmarks">
+          Select all Standard libraries benchmarks
+        </v-btn>
+      </v-col>
+
+      <v-col>
+        <v-btn :color="'orange'" @click="clearSelection"> Clear selection </v-btn>
+      </v-col>
+    </v-row>
+
+    <v-row>
+      <v-col>
+        <v-tooltip text="Show all the selected benchmarks">
+          <template #activator="{ props }">
+            <v-btn
+              size="x-large"
+              :location="'center'"
+              :color="'primary'"
+              v-bind="props"
+              @click="updateBenchData"
+            >
+              Show
+            </v-btn>
+          </template>
+        </v-tooltip>
       </v-col>
     </v-row>
   </v-container>
