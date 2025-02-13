@@ -5,7 +5,8 @@
     <v-row v-for="label in labels" :key="label" alignContent="center">
       <v-spacer />
       <v-col class="v-col-8">
-        <BenchGraph v-if="loadedBenches.get(label)"
+        <BenchGraph
+          v-if="loadedBenches.get(label)"
           :label="label"
           :startDate="startDate"
           :endDate="endDate"
@@ -91,4 +92,3 @@ function transformDatapointProps(datapoints: BenchDataPoint[]): BenchData[] {
   return ret
 }
 </script>
-
