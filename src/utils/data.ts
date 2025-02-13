@@ -30,6 +30,8 @@ export interface BenchDataPoint {
 export function dataPointHash(dp: BenchDataPoint): string {
   return `${dp.label}-${dp.score}-${dp.benchRun.id}`
 }
+
+async function processSingleFile(content: string): Promise<void> {
   const commitStore = useCommitStore()
   const benchRunStore = useBenchRunStore()
   const dataPointStore = useDataPointStore()
@@ -128,7 +130,7 @@ async function fetchAndProcessFile(filename: string): Promise<void> {
   console.log('Fetching file: ', filename)
   const resp = await fetch(FS_URL + '/' + filename)
   const content = await resp.text()
-  processSingleFile(content)
+  await processSingleFile(content)
   console.log('Processed file: ', filename)
 }
 
