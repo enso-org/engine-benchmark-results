@@ -173,3 +173,12 @@ export class Index {
     return filenames
   }
 }
+
+// Distill class names from labels
+export function classNameForLabel(label: string): string {
+  const items = label.split('.')
+  const n = items.length
+  console.assert(n >= 2, 'Incorrect label format: ' + label)
+  const classFullName = items.slice(0, n - 1).join('.')
+  return classFullName
+}

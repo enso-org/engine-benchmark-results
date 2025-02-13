@@ -7,10 +7,13 @@
       :since="startDate"
       :until="endDate"
       :branches="branches"
-      @update-bench-data="
-        updateBenchData($event.since, $event.until, $event.branches, $event.labels)
-      "
+      :labels="labels"
+      @updateBenchData="updateBenchData($event.since, $event.until, $event.branches, $event.labels)"
     />
+    <v-btn color="primary" size="large" @click="displayAllEngineBenchmarks">
+      Display all engine benchmarks
+    </v-btn>
+    <v-divider thickness="3" />
     <BenchGraphs
       :labels="labelsToDisplay"
       :branches="branches"
@@ -27,8 +30,10 @@ import BenchSearch from './BenchSearch.vue'
 import { subDays } from 'date-fns'
 import BenchGraphs from './BenchGraphs.vue'
 import BenchmarksInfo from './BenchmarksInfo.vue'
+import { useLabelStore } from '../stores/labelStore'
 
 const branches = ref(['develop'])
+const labels = ref<string[]>([])
 const minDate = new Date('2022-12-01')
 const maxDate = new Date('2024-06-01')
 const startDate = ref(subDays(maxDate, DEFAULT_DAYS_TO_FETCH))
@@ -46,6 +51,13 @@ function updateBenchData(since: Date, until: Date, newBranches: string[], labels
   endDate.value = until
   branches.value = newBranches
   labelsToDisplay.value = labels
+}
+
+function displayAllEngineBenchmarks() {
+  const labelStore = useLabelStore()
+  const engineLabels = Array.from(labelStore.getAllEngineLabels())
+  labelsToDisplay.value = engineLabels
+  labels.value = engineLabels
 }
 </script>
 

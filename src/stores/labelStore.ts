@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { classNameForLabel } from '../utils/data'
 
 export const useLabelStore = defineStore('label', {
   state: () => ({
@@ -9,7 +10,7 @@ export const useLabelStore = defineStore('label', {
 
   actions: {
     addLabel(label: string) {
-      const klazzName = className(label)
+      const klazzName = classNameForLabel(label)
       const lbls = this.classToLables.get(klazzName)
       if (lbls !== undefined) {
         lbls.add(label)
@@ -42,7 +43,7 @@ export const useLabelStore = defineStore('label', {
     /**
      * Returns set of all the labels inside Engine benchmarks.
      */
-    getAllEngineLabels(): Set<String> {
+    getAllEngineLabels(): Set<string> {
       // Filter this.labels by `isEngineLabel` function
       return new Set([...this.labels].filter(isEngineLabel))
     },
@@ -52,15 +53,6 @@ export const useLabelStore = defineStore('label', {
     },
   },
 })
-
-// Distill class names from labels
-function className(label: string): string {
-  const items = label.split('.')
-  const n = items.length
-  console.assert(n >= 2, 'Incorrect label format: ' + label)
-  const classFullName = items.slice(0, n - 1).join('.')
-  return classFullName
-}
 
 function isEngineLabel(label: String): boolean {
   return !isStdlibLabel(label)

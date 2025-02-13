@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue'
 import { useLabelStore } from '../stores/labelStore'
+import { classNameForLabel } from '../utils/data'
 
 const emit = defineEmits<{
   updateBenchData: [
@@ -19,7 +20,7 @@ const emit = defineEmits<{
  * since: The currently selected start date.
  * until: The currently selected end date.
  * branches: The list of all branches that can be selected.
- * labels: The list of all labels that can be selected.
+ * labels: List of labels that are already selected.
  */
 const props = defineProps<{
   minDate: Date
@@ -27,13 +28,27 @@ const props = defineProps<{
   since: Date
   until: Date
   branches: string[]
+  labels: string[]
 }>()
 
 const selectedBranches = ref<string[]>(['develop'])
 const since = ref(props.since)
 const until = ref(props.until)
-const selectedClasses = ref<string[]>([])
-const selectedLabels = ref<string[]>([])
+const selectedLabels = ref<string[]>(props.labels)
+const selectedClasses = ref<string[]>(classesFromLabels(props.labels))
+
+watch(props.labels, (newLabels) => {
+  console.log('props.labels changed')
+  selectedLabels.value = newLabels
+  selectedClasses.value = classesFromLabels(newLabels)
+})
+
+watch(selectedLabels, (newSelectedLabels, oldSelectedLabels) => {
+  console.log('selectedLabels changed')
+  if (oldSelectedLabels.length > newSelectedLabels.length) {
+    selectedClasses.value = classesFromLabels(newSelectedLabels)
+  }
+})
 
 // Check if some class was removed and remove all labels from it
 watch(selectedClasses, (newSelectedClasses, oldSelectedClasses) => {
@@ -73,6 +88,14 @@ function updateBenchData() {
     branches: selectedBranches.value,
     labels: selectedLabels.value,
   })
+}
+
+function classesFromLabels(labels: Array<string>): Array<string> {
+  const classes = new Set<string>()
+  for (const label of labels) {
+    classes.add(classNameForLabel(label))
+  }
+  return Array.from(classes)
 }
 </script>
 
