@@ -10,7 +10,6 @@ export const useDataPointStore = defineStore('dataPoint', {
 
   actions: {
     addDataPoint(dataPoint: BenchDataPoint) {
-      console.assert(!this.containsDatapoint(dataPoint))
       this.dataPoints.set(dataPointHash(dataPoint), dataPoint)
       if (this.byLabels.has(dataPoint.label)) {
         this.byLabels.get(dataPoint.label)!.push(dataPoint)
