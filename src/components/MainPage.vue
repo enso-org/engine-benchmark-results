@@ -22,19 +22,17 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useRoute } from 'vue-router'
 import { loadData, loadIndex } from '../utils/data'
 import BenchSearch from './BenchSearch.vue'
+import { subDays } from 'date-fns'
 import BenchGraphs from './BenchGraphs.vue'
 import BenchmarksInfo from './BenchmarksInfo.vue'
 
 const branches = ref(['develop'])
-const minDate = MIN_DATE
-const maxDate = MAX_DATE
-
-const route = useRoute()
-const startDate = ref(new Date(route.query.startDate as string))
-const endDate = ref(new Date(route.query.endDate as string))
+const minDate = new Date('2022-12-01')
+const maxDate = new Date('2024-06-01')
+const startDate = ref(subDays(maxDate, DEFAULT_DAYS_TO_FETCH))
+const endDate = ref(maxDate)
 
 // Load initial data
 const index = await loadIndex()
