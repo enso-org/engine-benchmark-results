@@ -27,3 +27,5 @@ export const useCommitStore = defineStore('commit', {
     },
   },
 })
+
+export type CommitStore = ReturnType<typeof useCommitStore>

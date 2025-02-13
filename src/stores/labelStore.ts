@@ -57,6 +57,8 @@ export const useLabelStore = defineStore('label', {
   },
 })
 
+export type LabelStore = ReturnType<typeof useLabelStore>
+
 function isEngineLabel(label: String): boolean {
   return !isStdlibLabel(label)
 }

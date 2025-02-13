@@ -19,3 +19,5 @@ export const useCacheFileStore = defineStore('cacheFiles', {
     },
   },
 })
+
+export type CacheFileStore = ReturnType<typeof useCacheFileStore>
