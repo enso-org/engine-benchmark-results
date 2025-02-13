@@ -1,8 +1,8 @@
 import { useBenchRunStore } from '../stores/benchRunStore'
+import { useCacheFileStore } from '../stores/cacheFileStore'
 import { useCommitStore } from '../stores/commitStore'
 import { useDataPointStore } from '../stores/dataPointsStore'
 import { useLabelStore } from '../stores/labelStore'
-import { useCacheFileStore } from '../stores/cacheFileStore'
 
 export interface Commit {
   id: string
