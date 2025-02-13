@@ -2,6 +2,7 @@
 import { ref, computed, watch } from 'vue'
 import { useLabelStore } from '../stores/labelStore'
 import { classNameForLabel } from '../utils/data'
+import { red } from 'vuetify/util/colors'
 
 const emit = defineEmits<{
   updateBenchData: [
@@ -196,7 +197,7 @@ function clearSelection() {
       </v-col>
 
       <v-col>
-        <v-btn :color="'orange'" @click="clearSelection"> Clear selection </v-btn>
+        <v-btn :color="red.lighten3" @click="clearSelection"> Clear selection </v-btn>
       </v-col>
     </v-row>
 
