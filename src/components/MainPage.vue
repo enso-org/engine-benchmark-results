@@ -26,11 +26,6 @@ import BenchSearch from './BenchSearch.vue'
 import { subDays } from 'date-fns'
 import BenchGraphs from './BenchGraphs.vue'
 import BenchmarksInfo from './BenchmarksInfo.vue'
-import { useCommitStore } from '../stores/commitStore'
-import { useBenchRunStore } from '../stores/benchRunStore'
-import { useDataPointStore } from '../stores/dataPointsStore'
-import { useLabelStore } from '../stores/labelStore'
-import { useCacheFileStore } from '../stores/cacheFileStore'
 
 const branches = ref(['develop'])
 const minDate = new Date('2022-12-01')
@@ -38,24 +33,9 @@ const maxDate = new Date('2024-06-01')
 const startDate = ref(subDays(maxDate, DEFAULT_DAYS_TO_FETCH))
 const endDate = ref(maxDate)
 
-const commitStore = useCommitStore()
-const benchRunStore = useBenchRunStore()
-const dataPointStore = useDataPointStore()
-const labelStore = useLabelStore()
-const cacheFileStore = useCacheFileStore()
-
 // Load initial data
 const index = await loadIndex()
-await loadData(
-  index,
-  startDate.value,
-  endDate.value,
-  cacheFileStore,
-  commitStore,
-  benchRunStore,
-  dataPointStore,
-  labelStore,
-)
+await loadData(index, startDate.value, endDate.value)
 
 const labelsToDisplay = ref<string[]>([])
 

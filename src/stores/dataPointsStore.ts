@@ -66,5 +66,3 @@ export const useDataPointStore = defineStore('dataPoint', {
     },
   },
 })
-
-export type DataPointStore = ReturnType<typeof useDataPointStore>

@@ -1,8 +1,8 @@
-import { BenchRunStore } from '../stores/benchRunStore'
-import { CacheFileStore } from '../stores/cacheFileStore'
-import { CommitStore } from '../stores/commitStore'
-import { DataPointStore } from '../stores/dataPointsStore'
-import { LabelStore } from '../stores/labelStore'
+import { useBenchRunStore } from '../stores/benchRunStore'
+import { useCommitStore } from '../stores/commitStore'
+import { useDataPointStore } from '../stores/dataPointsStore'
+import { useLabelStore } from '../stores/labelStore'
+import { useCacheFileStore } from '../stores/cacheFileStore'
 
 export interface Commit {
   id: string
@@ -32,13 +32,12 @@ export function dataPointHash(dp: BenchDataPoint): string {
   return `${dp.label}-${dp.score}-${dp.benchRun.id}`
 }
 
-async function processSingleFile(
-  content: string,
-  commitStore: CommitStore,
-  benchRunStore: BenchRunStore,
-  dataPointStore: DataPointStore,
-  labelStore: LabelStore,
-): Promise<void> {
+async function processSingleFile(content: string): Promise<void> {
+  const commitStore = useCommitStore()
+  const benchRunStore = useBenchRunStore()
+  const dataPointStore = useDataPointStore()
+  const labelStore = useLabelStore()
+
   const jsObj = JSON.parse(content)
   const benchRun = jsObj['bench_run']
   const benchRunId = benchRun['id']
@@ -104,50 +103,30 @@ export async function loadIndex(): Promise<Index> {
 
 /**
  * Loads all the data in the given date range.
+ * @param index
+ * @param startDate
+ * @param endDate
  */
-export async function loadData(
-  index: Index,
-  startDate: Date,
-  endDate: Date,
-  cacheFileStore: CacheFileStore,
-  commitStore: CommitStore,
-  benchRunStore: BenchRunStore,
-  dataPointStore: DataPointStore,
-  labelStore: LabelStore,
-): Promise<void> {
+export async function loadData(index: Index, startDate: Date, endDate: Date): Promise<void> {
   const fnames = index.getFilenamesFromDate(startDate, endDate)
   console.log('Fetching ', fnames.length, ' files')
-  const fetchAndLoadPromises: Array<Promise<void>> = []
+  const fetchAndLoadPromises: Array<Promise<void>> = new Array()
   for (const fname of fnames) {
-    if (!isFileLoaded(fname, cacheFileStore)) {
-      fetchAndLoadPromises.push(
-        fetchAndProcessFile(
-          fname,
-          cacheFileStore,
-          commitStore,
-          benchRunStore,
-          dataPointStore,
-          labelStore,
-        ),
-      )
+    if (!isFileLoaded(fname)) {
+      fetchAndLoadPromises.push(fetchAndProcessFile(fname))
     }
   }
   await Promise.all(fetchAndLoadPromises)
 }
 
-function isFileLoaded(filename: string, store: CacheFileStore): boolean {
-  return store.wasFileProcessed(filename)
+function isFileLoaded(filename: string): boolean {
+  const cacheFileStore = useCacheFileStore()
+  return cacheFileStore.wasFileProcessed(filename)
 }
 
-async function fetchAndProcessFile(
-  filename: string,
-  cacheFileStore: CacheFileStore,
-  commitStore: CommitStore,
-  benchRunStore: BenchRunStore,
-  dataPointStore: DataPointStore,
-  labelStore: LabelStore,
-): Promise<void> {
+async function fetchAndProcessFile(filename: string): Promise<void> {
   console.log('Processing file ', filename)
+  const cacheFileStore = useCacheFileStore()
   if (cacheFileStore.wasFileProcessed(filename)) {
     console.log('File already processed ', filename)
     return
@@ -155,7 +134,7 @@ async function fetchAndProcessFile(
   console.log('Fetching file: ', filename)
   const resp = await fetch(FS_URL + '/' + filename)
   const content = await resp.text()
-  await processSingleFile(content, commitStore, benchRunStore, dataPointStore, labelStore)
+  await processSingleFile(content)
   cacheFileStore.markFileAsProcessed(filename)
   console.log('Processed file: ', filename)
 }

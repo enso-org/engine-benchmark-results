@@ -26,5 +26,3 @@ export const useBenchRunStore = defineStore('benchRun', {
     },
   },
 })
-
-export type BenchRunStore = ReturnType<typeof useBenchRunStore>
