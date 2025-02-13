@@ -39,6 +39,14 @@ export const useLabelStore = defineStore('label', {
       return this.labels
     },
 
+    /**
+     * Returns set of all the labels inside Engine benchmarks.
+     */
+    getAllEngineLabels(): Set<String> {
+      // Filter this.labels by `isEngineLabel` function
+      return new Set([...this.labels].filter(isEngineLabel))
+    },
+
     containsLabel(label: string): boolean {
       return this.labels.has(label)
     },
@@ -52,4 +60,12 @@ function className(label: string): string {
   console.assert(n >= 2, 'Incorrect label format: ' + label)
   const classFullName = items.slice(0, n - 1).join('.')
   return classFullName
+}
+
+function isEngineLabel(label: String): boolean {
+  return !isStdlibLabel(label)
+}
+
+function isStdlibLabel(label: String): boolean {
+  return label.startsWith('org.enso.benchmarks.generated')
 }
