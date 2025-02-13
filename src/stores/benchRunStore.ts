@@ -3,21 +3,22 @@ import type { BenchRun } from '../utils/data'
 
 export const useBenchRunStore = defineStore('benchRun', {
   state: () => ({
-    benchRuns: [] as BenchRun[],
+    benchRuns: new Map<string, BenchRun>(),
   }),
 
   actions: {
     addBenchRun(benchRun: BenchRun) {
-      this.benchRuns.push(benchRun)
+      this.benchRuns.set(benchRun.id, benchRun)
     },
 
     findBenchRunsOnCommits(commitIds: string[]): BenchRun[] {
-      return this.benchRuns.filter((b) => commitIds.includes(b.headCommit.id))
+      const filterFunc = (b: BenchRun) => commitIds.includes(b.headCommit.id)
+      return Array.from(this.benchRuns.values()).filter(filterFunc)
     },
 
     findBenchRunById(benchRunId: string): BenchRun | null {
-      const found = this.benchRuns.find((benchRun) => benchRun.id === benchRunId)
-      if (found) {
+      const found = this.benchRuns.get(benchRunId)
+      if (found !== undefined) {
         return found
       } else {
         return null

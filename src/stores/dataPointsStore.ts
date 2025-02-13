@@ -1,16 +1,17 @@
 import { defineStore } from 'pinia'
-import type { BenchDataPoint } from '../utils/data'
+import { BenchDataPoint, dataPointHash } from '../utils/data'
 
 export const useDataPointStore = defineStore('dataPoint', {
   state: () => ({
-    dataPoints: [] as BenchDataPoint[],
-    byLabels: new Map() as Map<string, BenchDataPoint[]>,
+    // Storing dataPoint with their hashes as keys
+    dataPoints: new Map<string, BenchDataPoint>(),
+    byLabels: new Map<string, BenchDataPoint[]>(),
   }),
 
   actions: {
     addDataPoint(dataPoint: BenchDataPoint) {
       console.assert(!this.containsDatapoint(dataPoint))
-      this.dataPoints.push(dataPoint)
+      this.dataPoints.set(dataPointHash(dataPoint), dataPoint)
       if (this.byLabels.has(dataPoint.label)) {
         this.byLabels.get(dataPoint.label)!.push(dataPoint)
       } else {
@@ -19,7 +20,7 @@ export const useDataPointStore = defineStore('dataPoint', {
     },
 
     findDataPointsOnBenchRun(benchRunId: string): BenchDataPoint[] {
-      return this.dataPoints.filter((dp) => dp.benchRun.id === benchRunId)
+      return Array.from(this.dataPoints.values()).filter((dp) => dp.benchRun.id === benchRunId)
     },
 
     findDatapoints(options: {
@@ -44,7 +45,7 @@ export const useDataPointStore = defineStore('dataPoint', {
           return true
         })
       }
-      return this.dataPoints.filter((dp) => {
+      return Array.from(this.dataPoints.values()).filter((dp) => {
         if (options.startDate && dp.benchRun.headCommit.timestamp < options.startDate) {
           return false
         }
@@ -62,7 +63,7 @@ export const useDataPointStore = defineStore('dataPoint', {
     },
 
     containsDatapoint(dataPoint: BenchDataPoint): boolean {
-      return this.dataPoints.includes(dataPoint)
+      return this.dataPoints.has(dataPointHash(dataPoint))
     },
   },
 })

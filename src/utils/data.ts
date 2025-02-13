@@ -27,7 +27,9 @@ export interface BenchDataPoint {
   benchRun: BenchRun
 }
 
-function processSingleFile(content: string): void {
+export function dataPointHash(dp: BenchDataPoint): string {
+  return `${dp.label}-${dp.score}-${dp.benchRun.id}`
+}
   const commitStore = useCommitStore()
   const benchRunStore = useBenchRunStore()
   const dataPointStore = useDataPointStore()

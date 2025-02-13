@@ -3,18 +3,27 @@ import type { Commit } from '../utils/data'
 
 export const useCommitStore = defineStore('commit', {
   state: () => ({
-    commits: [] as Commit[],
+    commits: new Map<string, Commit>(),
   }),
 
   actions: {
     addCommit(commit: Commit) {
-      this.commits.push(commit)
+      this.commits.set(commit.id, commit)
     },
+
     findCommitByID(id: string): Commit | null {
-      return this.commits.find((c) => c.id === id) ?? null
+      const res = this.commits.get(id)
+      if (res === undefined) {
+        return null
+      } else {
+        return res
+      }
     },
+
     findCommitsBetween(since: Date, until: Date): Commit[] {
-      return this.commits.filter((c) => c.timestamp >= since && c.timestamp <= until)
+      return Array.from(this.commits.values()).filter((c) => {
+        return c.timestamp >= since && c.timestamp <= until
+      })
     },
   },
 })
