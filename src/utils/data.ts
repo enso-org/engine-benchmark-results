@@ -2,6 +2,7 @@ import { useBenchRunStore } from '../stores/benchRunStore'
 import { useCommitStore } from '../stores/commitStore'
 import { useDataPointStore } from '../stores/dataPointsStore'
 import { useLabelStore } from '../stores/labelStore'
+import { useCacheFileStore } from '../stores/cacheFileStore'
 
 export interface Commit {
   id: string
@@ -119,18 +120,22 @@ export async function loadData(index: Index, startDate: Date, endDate: Date): Pr
 }
 
 function isFileLoaded(filename: string): boolean {
-  const benchRunStore = useBenchRunStore()
-  // file names correspond to bench run Ids.
-  const benchRunId = filename.substring('cache/'.length, filename.length - '.json'.length)
-  const benchRun = benchRunStore.findBenchRunById(benchRunId)
-  return benchRun !== null
+  const cacheFileStore = useCacheFileStore()
+  return cacheFileStore.wasFileProcessed(filename)
 }
 
 async function fetchAndProcessFile(filename: string): Promise<void> {
+  console.log('Processing file ', filename)
+  const cacheFileStore = useCacheFileStore()
+  if (cacheFileStore.wasFileProcessed(filename)) {
+    console.log('File already processed ', filename)
+    return
+  }
   console.log('Fetching file: ', filename)
   const resp = await fetch(FS_URL + '/' + filename)
   const content = await resp.text()
   await processSingleFile(content)
+  cacheFileStore.markFileAsProcessed(filename)
   console.log('Processed file: ', filename)
 }
 
