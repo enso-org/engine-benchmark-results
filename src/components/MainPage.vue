@@ -39,7 +39,7 @@ const index = await loadIndex()
 await loadData(index, startDate.value, endDate.value)
 
 function updateBenchData(since: Date, until: Date, newBranches: string[], labels: string[]) {
-  console.log('Updating bench data')
+  console.debug('Updating bench data')
   startDate.value = since
   endDate.value = until
   branches.value = newBranches

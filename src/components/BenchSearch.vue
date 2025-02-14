@@ -71,10 +71,10 @@ const labelsToSuggest = computed(() => {
 })
 
 function updateBenchData() {
-  console.log('Updating bench data')
-  console.log('Since:', since.value)
-  console.log('Until:', until.value)
-  console.log('Selected branches:', selectedBranches.value)
+  console.debug('Updating bench data')
+  console.debug('Since:', since.value)
+  console.debug('Until:', until.value)
+  console.debug('Selected branches:', selectedBranches.value)
   emit('updateBenchData', {
     since: since.value,
     until: until.value,
