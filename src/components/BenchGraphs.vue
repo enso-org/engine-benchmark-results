@@ -3,8 +3,7 @@
   <v-container v-else>
     <v-row> Status: {{ loadedBenches.size }} loaded out of {{ labels.length }} </v-row>
     <v-row v-for="label in labels" :key="label" alignContent="center">
-      <v-spacer />
-      <v-col class="v-col-8">
+      <v-col>
         <BenchGraph
           v-if="loadedBenches.get(label)"
           :label="label"
@@ -17,7 +16,6 @@
           Loading benchmark {{ label }}
         </div>
       </v-col>
-      <v-spacer />
     </v-row>
   </v-container>
 </template>
