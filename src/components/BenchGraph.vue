@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineProps, ref, computed } from 'vue'
+import { defineProps, ref, computed, watch } from 'vue'
 import { Line } from 'vue-chartjs'
 import 'chartjs-adapter-date-fns'
 import {
@@ -71,6 +71,16 @@ const benchRunURLSel = ref<string | null>(null)
 
 const selectedElement = ref<SelectedElement | null>(null)
 const isElementSelected = computed(() => selectedElement.value !== null)
+
+watch(
+  () => props,
+  () => {
+    resetSelection()
+  },
+  {
+    deep: true,
+  },
+)
 
 // Map over entries of the props.benchData
 // These are real datasets for all the branches
@@ -186,6 +196,16 @@ const chartOpts: ChartOptions<'line'> = {
       radius: 3,
     },
   },
+}
+
+function resetSelection() {
+  scoreSel.value = null
+  commitDateSel.value = null
+  commitMsgSel.value = null
+  scoreDiffSel.value = null
+  scoreDiffPercSel.value = null
+  benchRunURLSel.value = null
+  selectedElement.value = null
 }
 </script>
 
