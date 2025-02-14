@@ -45,40 +45,31 @@ const allBenchData = ref<Map<string, Map<string, BenchData[]>>>(new Map())
 const loadedBenches = ref<Set<string>>(new Set())
 
 watch(
-  () => props.labels,
-  (newLabels) => {
+  () => [props.labels, props.startDate, props.endDate],
+  (newProps) => {
+    const newLabels = newProps[0] as string[]
+    const newStartDate = newProps[1] as Date
+    const newEndDate = newProps[2] as Date
     allBenchData.value.clear()
     loadedBenches.value.clear()
     for (let label of newLabels) {
-      const benchData = loadDataForBenchmark(label)
+      const benchData = loadDataForBenchmark(label, newStartDate, newEndDate)
       allBenchData.value.set(label, benchData)
       loadedBenches.value.add(label)
     }
   },
 )
 
-watch(
-  () => [props.startDate, props.endDate],
-  ([newStartDate, newEndDate]) => {
-    for (let label of props.labels) {
-      const branchBenchData = allBenchData.value.get(label)!
-      const newBranchBenchData = new Map<string, BenchData[]>()
-      for (let branch of props.branches) {
-        const benchData = branchBenchData.get(branch)!
-        const filteredBenchData = filterByDate(benchData, newStartDate, newEndDate)
-        newBranchBenchData.set(branch, filteredBenchData)
-      }
-      allBenchData.value.set(label, newBranchBenchData)
-    }
-  },
-)
-
-function loadDataForBenchmark(benchName: string): Map<string, BenchData[]> {
+function loadDataForBenchmark(
+  benchName: string,
+  startDate: Date,
+  endDate: Date,
+): Map<string, BenchData[]> {
   const benchData = new Map<string, BenchData[]>()
   for (const branch of props.branches) {
     const dp = datapointStore.findDatapoints({
-      startDate: props.startDate,
-      endDate: props.endDate,
+      startDate: startDate,
+      endDate: endDate,
       branch: branch,
       label: benchName,
     })
@@ -88,10 +79,6 @@ function loadDataForBenchmark(benchName: string): Map<string, BenchData[]> {
     benchData.set(branch, dpPropsSorted)
   }
   return benchData
-}
-
-function filterByDate(benchData: BenchData[], startDate: Date, endDate: Date): BenchData[] {
-  return benchData.filter((bd) => bd.timestamp >= startDate && bd.timestamp <= endDate)
 }
 
 /**
