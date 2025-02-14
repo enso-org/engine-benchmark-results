@@ -5,7 +5,7 @@
     <v-row v-for="label in labels" :key="label" alignContent="center">
       <v-col>
         <BenchGraph
-          v-if="loadedBenches.get(label)"
+          v-if="loadedBenches.has(label)"
           :label="label"
           :startDate="startDate"
           :endDate="endDate"
@@ -21,7 +21,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref, watch } from 'vue'
 import BenchGraph from './BenchGraph.vue'
 import { BenchData } from './BenchGraph.vue'
 import LoadingSpinner from './LoadingSpinner.vue'
@@ -40,24 +40,38 @@ const props = defineProps<{
 
 const datapointStore = useDataPointStore()
 const isEmpty = computed(() => props.labels.length === 0)
+// label -> branch -> BenchData[]
+const allBenchData = ref<Map<string, Map<string, BenchData[]>>>(new Map())
+const loadedBenches = ref<Set<string>>(new Set())
 
-// Start loading data for all benchmarks
-const allBenchData = computed(() => {
-  const _allBenchData: Map<string, Map<string, BenchData[]>> = new Map()
-  for (let label of props.labels) {
-    const benchData = loadDataForBenchmark(label)
-    _allBenchData.set(label, benchData)
-  }
-  return _allBenchData
-})
+watch(
+  () => props.labels,
+  (newLabels) => {
+    allBenchData.value.clear()
+    loadedBenches.value.clear()
+    for (let label of newLabels) {
+      const benchData = loadDataForBenchmark(label)
+      allBenchData.value.set(label, benchData)
+      loadedBenches.value.add(label)
+    }
+  },
+)
 
-const loadedBenches = computed(() => {
-  const _loadedBenches: Map<string, boolean> = new Map()
-  for (const loadedLabel of allBenchData.value.keys()) {
-    _loadedBenches.set(loadedLabel, true)
-  }
-  return _loadedBenches
-})
+watch(
+  () => [props.startDate, props.endDate],
+  ([newStartDate, newEndDate]) => {
+    for (let label of props.labels) {
+      const branchBenchData = allBenchData.value.get(label)!
+      const newBranchBenchData = new Map<string, BenchData[]>()
+      for (let branch of props.branches) {
+        const benchData = branchBenchData.get(branch)!
+        const filteredBenchData = filterByDate(benchData, newStartDate, newEndDate)
+        newBranchBenchData.set(branch, filteredBenchData)
+      }
+      allBenchData.value.set(label, newBranchBenchData)
+    }
+  },
+)
 
 function loadDataForBenchmark(benchName: string): Map<string, BenchData[]> {
   const benchData = new Map<string, BenchData[]>()
@@ -74,6 +88,10 @@ function loadDataForBenchmark(benchName: string): Map<string, BenchData[]> {
     benchData.set(branch, dpPropsSorted)
   }
   return benchData
+}
+
+function filterByDate(benchData: BenchData[], startDate: Date, endDate: Date): BenchData[] {
+  return benchData.filter((bd) => bd.timestamp >= startDate && bd.timestamp <= endDate)
 }
 
 /**
