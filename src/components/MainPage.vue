@@ -32,12 +32,11 @@ const minDate = new Date('2022-12-01')
 const maxDate = new Date('2024-06-01')
 const startDate = ref(subDays(maxDate, DEFAULT_DAYS_TO_FETCH))
 const endDate = ref(maxDate)
+const labelsToDisplay = ref<string[]>([])
 
 // Load initial data
 const index = await loadIndex()
 await loadData(index, startDate.value, endDate.value)
-
-const labelsToDisplay = ref<string[]>([])
 
 function updateBenchData(since: Date, until: Date, newBranches: string[], labels: string[]) {
   console.log('Updating bench data')

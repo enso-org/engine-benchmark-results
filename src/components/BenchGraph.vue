@@ -92,7 +92,10 @@ const datasets = computed(() => {
       fill: false,
       pointRadius: 3,
     }
-    console.log(`BenchGraph[${props.label}]: Created dataset for branch ${branch} with data:`, ret)
+    console.debug(
+      `BenchGraph[${props.label}]: Created dataset for branch ${branch} with data:`,
+      ret,
+    )
     return ret
   })
 })

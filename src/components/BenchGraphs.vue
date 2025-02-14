@@ -78,7 +78,7 @@ function loadDataForBenchmark(benchName: string): Map<string, BenchData[]> {
  * Transform bench data into the format required by BenchGraph component
  */
 function transformDatapointProps(datapoints: BenchDataPoint[]): BenchData[] {
-  const ret: BenchData[] = new Array()
+  const ret: BenchData[] = []
   for (const dp of datapoints) {
     const benchData = {
       score: dp.score,
