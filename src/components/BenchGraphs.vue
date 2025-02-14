@@ -69,7 +69,9 @@ function loadDataForBenchmark(benchName: string): Map<string, BenchData[]> {
       label: benchName,
     })
     const dpProps = transformDatapointProps(dp)
-    benchData.set(branch, dpProps)
+    // Sort dpProps by date
+    const dpPropsSorted = dpProps.sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime())
+    benchData.set(branch, dpPropsSorted)
   }
   return benchData
 }
