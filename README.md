@@ -21,6 +21,13 @@ Run the dev server with `npm install && npx vite`.
 Run `npm run build` to build the static site.
 The output will be in the `dist` directory.
 
+## Technology stack
+- [Vue-chartjs](https://vue-chartjs.org/)
+  - For plotting
+- [Pinia](https://pinia.vuejs.org/) 
+  - For global state management
+- [Vuetify](https://vuetifyjs.com/en/) 
+  - Material component library for Vue
 
 ## References
 - [enso-org/enso:tools/performance/engine-benchmarks](https://github.com/enso-org/enso/blob/develop/tools/performance/engine-benchmarks/README.md)
