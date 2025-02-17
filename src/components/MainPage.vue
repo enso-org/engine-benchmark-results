@@ -17,6 +17,18 @@
       :endDate="endDate"
     />
   </v-container>
+  <v-container>
+    <v-divider thickness="3" />
+    <h2>Old benchmarks</h2>
+    <v-list>
+      <v-list-item>
+        <a href="engine-benchs.html">Old engine benchmarks</a>
+      </v-list-item>
+      <v-list-item>
+        <a href="stdlib-benchs.html">Old stdlib benchmarks</a>
+      </v-list-item>
+    </v-list>
+  </v-container>
 </template>
 
 <script setup lang="ts">

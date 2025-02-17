@@ -23,12 +23,8 @@ export default defineConfig({
           dest: 'cache',
         },
         {
-          src: 'stdlib-benchs.html',
-          dest: 'stdlib-benchs.html',
-        },
-        {
-          src: 'engine-benchs.html',
-          dest: 'engine-benchs.html',
+          src: ['stdlib-benchs.html', 'engine-benchs.html'],
+          dest: '.',
         },
       ],
     }),
