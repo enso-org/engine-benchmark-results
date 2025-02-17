@@ -1,0 +1,177 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$comment": "Version 2.0",
+  "title": "BenchRun",
+  "description": "Data from the benchmarking GitHub action",
+  "type": "object",
+  "properties": {
+    "bench_run": {
+      "type": "object",
+      "description": "Details about the benchmark GitHub Action run",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The GitHub Action run ID"
+        },
+        "html_url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "run_attempt": {
+          "type": "integer"
+        },
+        "event": {
+          "type": "string"
+        },
+        "display_title": {
+          "type": "string"
+        },
+        "head_commit": {
+          "type": "object",
+          "description": "The commit on which the benchmarks were run",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "message": {
+              "type": "string"
+            },
+            "timestamp": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "author": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name"
+              ]
+            },
+            "branch": {
+              "type": "string"
+            },
+            "url": {
+              "type": "string",
+              "format": "uri"
+            }
+          },
+          "required": [
+            "id",
+            "message",
+            "timestamp",
+            "author",
+            "branch"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "html_url",
+        "run_attempt",
+        "event",
+        "display_title",
+        "head_commit"
+      ]
+    },
+    "results": {
+      "type": "array",
+      "items": true,
+      "description": "The benchmark results",
+      "properties": {
+        "label": {
+          "type": "string"
+        },
+        "score": {
+          "type": "number",
+          "description": "Average number of iterations per millisecond"
+        },
+        "min": {
+          "type": "number"
+        },
+        "max": {
+          "type": "number"
+        },
+        "mean": {
+          "type": "number"
+        },
+        "stddev": {
+          "type": "number"
+        },
+        "samples": {
+          "type": "number",
+          "description": "The number of measurement samples (iterations) taken"
+        },
+        "configuration": {
+          "type": "object",
+          "properties": {
+            "osName": {
+              "type": "string"
+            },
+            "osArch": {
+              "type": "string"
+            },
+            "osVersion": {
+              "type": "string"
+            },
+            "jdkVersion": {
+              "type": "string"
+            },
+            "vmName": {
+              "type": "string",
+              "description": "`java.vm.name` system property"
+            },
+            "vmVersion": {
+              "type": "string",
+              "description": "`java.vm.version` system property"
+            },
+            "vmVendor": {
+              "type": "string",
+              "description": "`java.vm.vendor` system property"
+            },
+            "warmupIterations": {
+              "type": "integer",
+              "description": "The number of warmup iterations"
+            },
+            "warmupMillis": {
+              "type": "integer",
+              "description": "The number of milliseconds per warmup iteration"
+            },
+            "measureMillis": {
+              "type": "integer",
+              "description": "The number of milliseconds per measurement iteration"
+            }
+          },
+          "required": [
+            "osName",
+            "osArch",
+            "osVersion",
+            "jdkVersion",
+            "vmName",
+            "vmVersion",
+            "vmVendor",
+            "warmupIterations",
+            "warmupMillis",
+            "measureMillis"
+          ]
+        }
+      },
+      "required": [
+        "label",
+        "score",
+        "min",
+        "max",
+        "mean",
+        "stddev",
+        "samples"
+      ]
+    }
+  },
+  "required": [
+    "bench_run",
+    "results"
+  ]
+}

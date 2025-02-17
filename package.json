@@ -1,0 +1,47 @@
+{
+  "name": "engine-benchmark-results",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "npm run validate-cache && vue-tsc && vite build",
+    "validate-cache": "node ./scripts/validate_cache.js",
+    "lint": "eslint .",
+    "format": "prettier --version && prettier --write src/ && eslint . --fix",
+    "typecheck": "vue-tsc --noEmit",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@types/serve-static": "^1.15.7",
+    "@typescript-eslint/eslint-plugin": "^7.13.1",
+    "ajv": "^8.16.0",
+    "ajv-formats": "^3.0.1",
+    "chart.js": "^4.4.3",
+    "chartjs-adapter-date-fns": "^3.0.0",
+    "date-fns": "^3.6.0",
+    "pinia": "^2.1.7",
+    "serve-static": "^1.15.0",
+    "vite-plugin-static-copy": "^2.2.0",
+    "vue": "^3.4.21",
+    "vue-chartjs": "^5.3.1",
+    "vuetify": "^3.6.8"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.0.2",
+    "@eslint/js": "^8.57.0",
+    "@vitejs/plugin-vue": "^5.0.4",
+    "@vue/eslint-config-prettier": "^9.0.0",
+    "@vue/eslint-config-typescript": "^12.0.0",
+    "eslint": "^8.49.0",
+    "eslint-plugin-vue": "^9.22.0",
+    "globals": "^15.6.0",
+    "prettier": "^3.2.5",
+    "prettier-plugin-organize-imports": "^3.2.4",
+    "typescript": "^5.2.2",
+    "typescript-eslint": "^7.13.1",
+    "vite": "^5.2.0",
+    "vite-plugin-vuetify": "^2.0.3",
+    "vue-tsc": "^2.0.6"
+  }
+}
