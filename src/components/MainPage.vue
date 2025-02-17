@@ -28,8 +28,8 @@ import BenchGraphs from './BenchGraphs.vue'
 import BenchmarksInfo from './BenchmarksInfo.vue'
 
 const branches = ref(['develop'])
-const minDate = new Date('2022-12-01')
-const maxDate = new Date('2024-06-01')
+const minDate = new Date(MIN_DATE)
+const maxDate = new Date()
 const startDate = ref(subDays(maxDate, DEFAULT_DAYS_TO_FETCH))
 const endDate = ref(maxDate)
 const labelsToDisplay = ref<string[]>([])
