@@ -35,3 +35,11 @@ Run `npm run preview` to serve the `dist` directory.
     - This is a directory with Python package that deals with benchmarks - regenerate HTML website, gather results from GH artifacts and upload them to this repo, etc.
 - [enso-org/enso:docs/infrastructure/benchmarks.md](https://github.com/enso-org/enso/blob/develop/docs/infrastructure/benchmarks.md#visualization)
 - https://mkay11.medium.com/how-to-deploy-your-vite-vue-3-application-in-github-pages-2023-2b842f50576a
+
+## Legacy static webpages
+The old static webpages are still generated inside `stdlib-benchs.html`
+and `engine-benchs.html` files and included in the deployed GH pages.
+They will be removed as soon as the data format is changed.
+Accessible via these URLs:
+- https://enso-org.github.io/engine-benchmark-results/stdlib-benchs.html
+- https://enso-org.github.io/engine-benchmark-results/engine-benchs.html
