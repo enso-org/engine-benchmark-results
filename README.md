@@ -20,6 +20,7 @@ Run the dev server with `npm install && npx vite`.
 ### Building static sites from Vue
 Run `npm run build` to build the static site.
 The output will be in the `dist` directory.
+Run `npm run preview` to serve the `dist` directory.
 
 ## Technology stack
 - [Vue-chartjs](https://vue-chartjs.org/)
