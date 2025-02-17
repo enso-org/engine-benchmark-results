@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$comment": "Version 1.0",
+  "$comment": "Version 2.0",
   "title": "BenchRun",
   "description": "Data from the benchmarking GitHub action",
   "type": "object",
