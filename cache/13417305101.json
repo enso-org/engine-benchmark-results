@@ -1,0 +1,22 @@
+{
+  "bench_run": {
+    "id": "13417305101",
+    "html_url": "https://github.com/enso-org/enso/actions/runs/13417305101",
+    "run_attempt": 1,
+    "event": "workflow_dispatch",
+    "display_title": "Benchmark Engine",
+    "head_commit": {
+      "id": "560e9a580713cdf7b33607e57525aa139e74b52c",
+      "message": "Ability to run just a single benchmark on the CI (#12324)\n\n* benchmark command accepts optional bench_name\n\n* Add bench_name as workflow input\n\n* lint\n\n* lint",
+      "timestamp": "2025-02-19T16:17:38Z",
+      "author": {
+        "name": "Pavel Marek"
+      }
+    }
+  },
+  "label_score_dict": {
+    "org.enso.interpreter.bench.benchmarks.semantic.VectorBenchmarks.averageOverSlice": 0.0015238630428025938,
+    "org.enso.interpreter.bench.benchmarks.semantic.VectorBenchmarks.averageOverSliceWrapped10": 0.006910538816406233,
+    "org.enso.interpreter.bench.benchmarks.semantic.VectorBenchmarks.averageOverSliceWrapped100": 0.0067169520062714426
+  }
+}
