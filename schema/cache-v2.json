@@ -50,7 +50,7 @@
         "jdkVersion"
       ]
     },
-    "gh_action_run": {
+    "ghActionRun": {
       "type": ["object", "null"],
       "description": "Details about the benchmark GitHub Action run. On local run, can be null. If run on the CI, must not be null.",
       "properties": {
@@ -250,7 +250,7 @@
   "required": [
     "$schema",
     "configuration",
-    "gh_action_run",
+    "ghActionRun",
     "results"
   ]
 }
