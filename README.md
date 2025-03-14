@@ -14,6 +14,11 @@ There is a special `cache/index.json` file that maps json file names to their ti
 The `Benchmarks Upload` actions the runs [website_regen.py](https://github.com/enso-org/enso/blob/develop/tools/performance/engine-benchmarks/website_regen.py) script.
 
 ## Contributing
+When cloning the repo, it is recommended to truncate the history to save time:
+```bash
+git clone --depth 1
+```
+(because this repo contains some big HTML files).
 Run the dev server with `npm install && npx vite`.
 
 
