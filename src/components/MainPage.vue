@@ -1,6 +1,5 @@
 <template>
   <v-container>
-    <BenchmarksInfo :startDate="startDate" :endDate="endDate" />
     <BenchSearch
       :minDate="minDate"
       :maxDate="maxDate"
@@ -29,6 +28,7 @@
       </v-list-item>
     </v-list>
   </v-container>
+  <BenchmarksInfo :startDate="startDate" :endDate="endDate" />
 </template>
 
 <script setup lang="ts">
