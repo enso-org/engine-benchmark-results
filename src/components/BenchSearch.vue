@@ -3,6 +3,7 @@ import { ref, computed, watch } from 'vue'
 import { useLabelStore } from '../stores/labelStore'
 import { classNameForLabel } from '../utils/data'
 import { red } from 'vuetify/util/colors'
+import { VDateInput } from 'vuetify/labs/VDateInput'
 
 const emit = defineEmits<{
   updateBenchData: [
@@ -75,11 +76,17 @@ function updateBenchData() {
   console.debug('Since:', since.value)
   console.debug('Until:', until.value)
   console.debug('Selected branches:', selectedBranches.value)
+
+  let labels = selectedLabels.value
+  if (labels.length == 0) {
+    labels = labelsToSuggest.value
+  }
+
   emit('updateBenchData', {
     since: since.value,
     until: until.value,
     branches: selectedBranches.value,
-    labels: selectedLabels.value,
+    labels: labels,
   })
 }
 
@@ -121,65 +128,64 @@ function clearSelection() {
     <v-row>
       <v-col>
         <v-card :variant="'outlined'" class="bench-filters">
-          <v-card-title class="filters-title"> Filters </v-card-title>
+        <!-- Classes -->
+        <v-row>
+          <v-col>
+            <v-autocomplete
+              v-model="selectedClasses"
+              label="Benchmark Classes"
+              :items="allClasses"
+              multiple
+            ></v-autocomplete>
+          </v-col>
+        </v-row>
+        <!-- Benchmarks (depends on which classes are selected) -->
+        <v-row>
+          <v-col>
+            <v-autocomplete
+              v-model="selectedLabels"
+              label="Individual Benchmarks"
+              :items="labelsToSuggest"
+              multiple
+            ></v-autocomplete>
+          </v-col>
+        </v-row>
+        <v-card-title class="filters-title"> Filters </v-card-title>
           <v-card-text>
             <v-container>
               <v-row>
                 <v-col>
-                  <v-date-picker
+                  <v-date-input
                     v-model="since"
                     label="Since"
                     title="Since"
                     :max="props.maxDate"
                     :min="props.minDate"
-                  ></v-date-picker>
+                    persistent-placeholder
+                  ></v-date-input>
                 </v-col>
                 <v-col>
-                  <v-date-picker
+                  <v-date-input
                     v-model="until"
                     label="Until"
                     title="Until"
                     :max="props.maxDate"
                     :min="props.minDate"
-                  ></v-date-picker>
+                  ></v-date-input>
+                </v-col>
+                <!-- Branches -->
+                <v-col>
+                  <v-autocomplete
+                    v-model="selectedBranches"
+                    label="Branches"
+                    :items="props.branches"
+                    multiple
+                  ></v-autocomplete>
                 </v-col>
               </v-row>
             </v-container>
           </v-card-text>
         </v-card>
-      </v-col>
-    </v-row>
-    <!-- Branches -->
-    <v-row>
-      <v-col>
-        <v-autocomplete
-          v-model="selectedBranches"
-          label="Branches"
-          :items="props.branches"
-          multiple
-        ></v-autocomplete>
-      </v-col>
-    </v-row>
-    <!-- Classes -->
-    <v-row>
-      <v-col>
-        <v-autocomplete
-          v-model="selectedClasses"
-          label="Classes"
-          :items="allClasses"
-          multiple
-        ></v-autocomplete>
-      </v-col>
-    </v-row>
-    <!-- Benchmarks (depends on which classes are selected) -->
-    <v-row>
-      <v-col>
-        <v-autocomplete
-          v-model="selectedLabels"
-          label="Benchmarks (labels)"
-          :items="labelsToSuggest"
-          multiple
-        ></v-autocomplete>
       </v-col>
     </v-row>
 
