@@ -1,0 +1,28 @@
+{
+  "bench_run": {
+    "id": "18215297451",
+    "html_url": "https://github.com/enso-org/enso/actions/runs/18215297451",
+    "run_attempt": 1,
+    "event": "workflow_dispatch",
+    "display_title": "Benchmark Standard Libraries",
+    "head_commit": {
+      "id": "3b9bf02f1942fe98182c7e8ed24627495404b7cc",
+      "message": "Fibonacci benchmark comparing hosted and dual JVM modes (#14099)\n\nLet's write simple, scalable benchmark to compare the cost of invoking `polyglot java import` methods:\n```ruby\npolyglot java import java.lang.Math\n\nmain n=10 =\nfib n\n\nprivate fib n = if Math.max n 1 == 1 then 1 else\nn1 = Math.decrementExact n\nn2 = Math.decrementExact n1\n\nf1 = fib n1\nf2 = fib n2\n\nMath.addExact f1 f2\n```\nrun with either:\n```bash\nenso$ time ./enso --jvm --run fib_dual.enso 20\n10946\n\nreal    0m1,894s\n\n```\nor in dual JVM mode:\n```bash\ntime ./enso --run fib_dual.enso 20 # if compiled by native image\nSEVERE: Using experimental OtherJvm support!\n10946\n\nreal    0m3,627s\n```\nor in a mock mode:\n```bash\nenso$ time ./enso --jvm --vm.D=polyglot.enso.classLoading=guest --run fib_dual.enso 20\n[ERROR] [2025-10-02T11:11:58+02:00] [org.enso.interpreter.runtime.EnsoPolyglotJava] Using experimental OtherJvm support!\n10946\n\nreal    0m4,864s\n```\nThis PR introduces two JMH benchmarks using the same program but properly (micro) benchmarking the necessary operations.",
+      "timestamp": "2025-10-03T06:42:43Z",
+      "author": {
+        "name": "Jaroslav Tulach"
+      }
+    }
+  },
+  "label_score_dict": {
+    "org.enso.benchmarks.generated.Compare_JVM_Modes.Empty_Dual_JVM_Tests": 9467.273750249999,
+    "org.enso.benchmarks.generated.Compare_JVM_Modes.Empty_Dual_Tests": 8426.83190775,
+    "org.enso.benchmarks.generated.Compare_JVM_Modes.Empty_Tests": 9236.46008275,
+    "org.enso.benchmarks.generated.Compare_JVM_Modes.Real_Dual_JVM_Tests": 15687.3916655,
+    "org.enso.benchmarks.generated.Compare_JVM_Modes.Real_Dual_Tests": 13545.0459445,
+    "org.enso.benchmarks.generated.Compare_JVM_Modes.Real_JVM_Tests": 11961.1705735,
+    "org.enso.benchmarks.generated.Compare_JVM_Modes.Single_Dual_JVM_Tests": 11445.045710499999,
+    "org.enso.benchmarks.generated.Compare_JVM_Modes.Single_Dual_Tests": 10236.577720000001,
+    "org.enso.benchmarks.generated.Compare_JVM_Modes.Single_JVM_Tests": 10919.111303
+  }
+}
